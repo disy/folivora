@@ -1,0 +1,51 @@
+.bar {
+    background-color: rgba(0,0,0,0.7);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    /* opacity: 0; */
+    transition: opacity 0.5s;
+    border-top: 1px solid rgba(255,255,255,0.5);
+}
+
+.bar:hover {
+    opacity: 1;
+}
+
+.bar button {
+    padding: 5px 10px;
+    margin: 0 6px;
+    background-color: transparent;
+    border: 0;
+    font-weight: bold;
+    width: 130px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.bar button:hover:not(:disabled) {
+    color: #000;
+    background-color: rgba(255,255,255,0.6);
+}
+
+.bar button:active {
+    background-color: rgba(255,255,255,0.8);
+}
+
+.bar button:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+#pollModal input {
+    display: inline-block;
+}
+
+#pollModal li {
+    margin: 0.3rem 0;
+}

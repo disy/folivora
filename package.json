@@ -1,0 +1,38 @@
+{
+  "name": "share-slides",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev-server": "nodemon ./server/index.js",
+    "dev-client": "webpack --mode=development --watch"
+  },
+  "dependencies": {
+    "@types/jquery": "^3.3.22",
+    "@types/socket.io": "^1.4.38",
+    "@types/socket.io-client": "^1.4.32",
+    "@types/text-encoding": "^0.0.34",
+    "body-parser": "^1.18.3",
+    "csurf": "^1.9.0",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
+    "tingodb": "^0.6.1",
+    "ts-loader": "^5.2.2",
+    "typescript": "^3.1.4",
+    "uuid": "^3.3.2",
+    "webpack": "^4.23.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.5",
+    "webpack-cli": "^3.1.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "public/*",
+      "views/*"
+    ]
+  }
+}

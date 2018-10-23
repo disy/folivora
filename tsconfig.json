@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "outDir": "./public/",
+      "noImplicitAny": false,
+      "module": "es6",
+      "target": "es5",
+      "lib": ["dom", "es2015", "es2015.promise", "es5"],
+      "allowJs": true
+    }
+  }

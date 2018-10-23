@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <title>Slide Share</title>
+
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
+
+    <meta content="{{csrfToken}}" name="csrf-token" />
+
+    <style>
+    </style>
+</head>
+
+<body>
+    {{{body}}}
+
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+    $('input[type="radio"]').change(function () {
+        if ($(this).val() === 'lecturer') {
+            $('.credentials').show();
+        } else {
+            $('.credentials').hide();
+        }
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+node_modules/
+public/scripts/bundle.js
+lecturer.json
+database/
