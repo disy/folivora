@@ -17,6 +17,8 @@ class Lecturer extends Student {
             choices
         }) => {
             this.lecture.setPoll(question, choices);
+
+            io.emit('page', this.lecture.getCurrentPage());
         });
     }
 }

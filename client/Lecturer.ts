@@ -6,6 +6,8 @@ const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
 
 export default class Lecturer extends Student {
+    private previousButton: JQuery;
+    private nextButton: JQuery;
     private pollResultButton: JQuery;
     private editPollButton: JQuery;
 
@@ -20,6 +22,8 @@ export default class Lecturer extends Student {
 
             if (pollResult) {
                 pollResult.addVote(choice);
+
+                this.pollResultButton.attr('data-badge', pollResult.getNumberOfVotes());
             }
         });
 
@@ -30,16 +34,27 @@ export default class Lecturer extends Student {
                 });
             });
 
-            this.pollResultButton.off('click').attr('disabled', 'disabled');
+            this.pollResultButton.off('click').attr('disabled', 'disabled').removeAttr('data-badge');
 
-            if (page.votedIds.length === 0) {
-                return;
+            if (page.previousUrl) {
+                this.previousButton.removeAttr('disabled');
+            } else {
+                this.previousButton.attr('disabled', 'disabled');
             }
 
-            this.pollResultButton.removeAttr('disabled');
-            this.pollResultButton.click(() => {
-                PollResultManager.get(page.index).show();
-            });
+            if (page.nextUrl) {
+                this.nextButton.removeAttr('disabled');
+            } else {
+                this.nextButton.attr('disabled', 'disabled');
+            }
+
+            if (page.poll) {
+                this.pollResultButton.attr('data-badge', page.votedIds.length);
+                this.pollResultButton.removeAttr('disabled');
+                this.pollResultButton.click(() => {
+                    PollResultManager.get(page.index).show();
+                });
+            }
         })
 
         this.initUi();
@@ -58,15 +73,15 @@ export default class Lecturer extends Student {
     private initUi() {
         let barElement = $('#navBar');
 
-        let previousElement = $('<button>');
-        previousElement.text('Previous');
-        previousElement.click(() => this.socket.emit('move', -1));
-        previousElement.appendTo(barElement);
+        this.previousButton = $('<button>');
+        this.previousButton.text('Previous');
+        this.previousButton.click(() => this.socket.emit('move', -1));
+        this.previousButton.appendTo(barElement);
 
-        let nextElement = $('<button>');
-        nextElement.text('Next');
-        nextElement.click(() => this.socket.emit('move', 1));
-        nextElement.appendTo(barElement);
+        this.nextButton = $('<button>');
+        this.nextButton.text('Next');
+        this.nextButton.click(() => this.socket.emit('move', 1));
+        this.nextButton.appendTo(barElement);
 
         this.editPollButton = $('<button>');
         this.editPollButton.text('Edit poll');

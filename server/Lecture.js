@@ -1,20 +1,17 @@
 const Database = require('./Database');
 
 class Lecture {
-    static get(id) {
-        if (!Lecture.instances) {
-            Lecture.instances = {};
-        }
+    constructor(data) {
+        this.id = data.id;
+        this.name = data.name;
+        this.path = data.path;
+        this.min = data.min;
+        this.max = data.max;
 
-        if (!Lecture.instances[id]) {
-            Lecture.instances[id] = new Lecture(id);
-        }
-
-        return Lecture.instances[id];
-    }
-
-    constructor(id) {
-        this.id = id || 'undefined';
+        this.currentPageIndex = this.min;
+        this.polls = [];
+        this.votes = [];
+        this.votedIds = [];
 
         this.collection = Database.get().collection('lectures');
         this.collection.findOne({
@@ -23,27 +20,26 @@ class Lecture {
             }
         }, (err, data) => {
             if (err || !data) {
-                console.log('Error:', err, data);
+                console.log(`Could not read any data for lecture "${this.id}":`, err, data);
                 return;
             }
 
-            this.currentPageIndex = data.currentPageIndex || 1;
+            this.currentPageIndex = data.currentPageIndex || this.min;
             this.polls = data.polls || [];
             this.votes = data.votes || [];
             this.votedIds = data.votedIds || [];
         }) || {};
-
-        this.currentPageIndex = 1;
-        this.polls = [];
-        this.votes = [];
-        this.votedIds = [];
     }
 
     getCurrentPage() {
+        let previousIndex = this.currentPageIndex > this.min ? this.currentPageIndex - 1 : undefined;
+        let nextIndex = this.currentPageIndex < this.max ? this.currentPageIndex + 1 : undefined;
+
         let currentPage = {
             index: this.currentPageIndex,
-            url: `svg/page${this.currentPageIndex}.svg`,
-            nextUrl: `svg/page${this.currentPageIndex + 1}.svg`,
+            previousUrl: this.getUrl(previousIndex),
+            url: this.getUrl(this.currentPageIndex),
+            nextUrl: this.getUrl(nextIndex),
             poll: this.polls[this.currentPageIndex],
             votes: this.votes[this.currentPageIndex],
             votedIds: this.votedIds[this.currentPageIndex] || [],
@@ -52,8 +48,12 @@ class Lecture {
         return currentPage;
     }
 
+    getUrl(index) {
+        return index ? `${this.path}/${index}.svg` : undefined;
+    }
+
     move(direction) {
-        this.currentPageIndex = Math.max(this.currentPageIndex + parseInt(direction), 1);
+        this.currentPageIndex = Math.min(Math.max(this.currentPageIndex + parseInt(direction), this.min), this.max);
 
         this.save();
     }

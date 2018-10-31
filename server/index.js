@@ -3,6 +3,7 @@ const expressHandlebars = require('express-handlebars');
 const app = express();
 const http = require('http').Server(app);
 const socket = require('socket.io');
+const LectureRepository = require('./LectureRepository');
 const userDatabase = require('../lecturer.json');
 
 const ROLE = require('./ROLES');
@@ -10,6 +11,15 @@ const Student = require('./Student');
 const Lecturer = require('./Lecturer');
 
 const io = socket(http);
+
+let lectureRepository = LectureRepository.get();
+lectureRepository.init();
+
+if (lectureRepository.getNumberOfLectures() === 0) {
+    console.log('I found no lecture in public/lectures/. Abort.');
+
+    process.exit(1);
+}
 
 app.engine('.hbs', expressHandlebars({
     defaultLayout: 'main',

@@ -93,3 +93,12 @@ input {
     background-color: greenyellow;
     cursor: default;
 }
+
+[data-badge]:after {
+    content: attr(data-badge);
+    margin-left: 0.3rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    padding: 0 0.3rem;
+    background-color: orange;
+}

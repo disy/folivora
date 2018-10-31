@@ -4,7 +4,7 @@ export default class PollResult {
     private element;
     private totalVotes: number = 0;
 
-    constructor(private votes) {
+    constructor(private votes = {}) {
         this.element = $('#pollResultModal');
 
         for (let choice in this.votes) {
@@ -49,5 +49,9 @@ export default class PollResult {
             choiceElement.css('width', `${percentage}%`);
             choiceElement.attr('data-percentage', (Math.round(percentage * 10) / 10) + '%');
         }
+    }
+
+    getNumberOfVotes() {
+        return this.totalVotes;
     }
 }

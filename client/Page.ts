@@ -6,7 +6,9 @@ export default class Page {
         this.index = data.index;
         this.url = data.url;
 
-        $('#preloading').attr('src', data.nextUrl);
+        if (data.nextUrl) {
+            $('#preloading').attr('src', data.nextUrl);
+        }
 
         $('body').attr('data-currentIndex', this.index);
         $('body').css('background-image', `url(${this.url})`);

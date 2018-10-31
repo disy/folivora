@@ -1,11 +1,11 @@
-const Lecture = require('./Lecture');
+const LectureRepository = require('./LectureRepository');
 
 class Student {
     constructor(id, socket, io) {
         this.id = id;
         this.socket = socket;
         this.io = io;
-        this.lecture = Lecture.get();
+        this.lecture = LectureRepository.get().getLecture();
 
         socket.on('ready', () => {
             socket.emit('page', this.lecture.getCurrentPage());
