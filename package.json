@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "build": "webpack --mode=development",
+    "run": "node ./server/index.js",
     "dev-server": "nodemon ./server/index.js",
     "dev-client": "webpack --mode=development --watch"
   },
