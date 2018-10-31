@@ -51,6 +51,8 @@ export default class Lecturer extends Student {
             }
 
             if (page.poll) {
+                PollResultManager.set(page.index, page.poll.choices, page.votes);
+
                 this.pollResultButton.attr('data-badge', page.votedIds.length);
                 this.pollResultButton.removeAttr('disabled');
                 this.pollResultButton.click(() => {

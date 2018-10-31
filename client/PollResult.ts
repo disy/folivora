@@ -4,7 +4,7 @@ export default class PollResult {
     private element;
     private totalVotes: number = 0;
 
-    constructor(private votes = {}) {
+    constructor(private choices = [], private votes = {}) {
         this.element = $('#pollResultModal');
 
         for (let choice in this.votes) {
@@ -17,7 +17,7 @@ export default class PollResult {
         body.empty();
 
         let choiceIndex = 0;
-        for (let choice in this.votes) {
+        for (let choice of this.choices) {
             let votes = this.votes[choice];
             let percentage = votes / this.totalVotes * 100;
             let choiceElement = $('<p>');

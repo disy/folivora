@@ -7,8 +7,8 @@ export default class PollResultManager {
         return PollResultManager.instances[pageIndex];
     }
 
-    static set(pageIndex, votes) {
-        PollResultManager.instances[pageIndex] = new PollResult(votes);
+    static set(pageIndex, choices, votes) {
+        PollResultManager.instances[pageIndex] = new PollResult(choices, votes);
 
         return PollResultManager.instances[pageIndex];
     }

@@ -1,6 +1,5 @@
 import { Socket } from "socket.io";
 import Page from "./Page";
-import PollResultManager from "./PollResultManager";
 import VoteModal from './VoteModal'
 
 export default class Student {
@@ -24,7 +23,5 @@ export default class Student {
                 choice: choice,
             });
         });
-
-        PollResultManager.set(page.index, page.votes);
     }
 }
