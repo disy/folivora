@@ -4,6 +4,8 @@ import EditPollModal from './EditPollModal';
 
 const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
+const PAGE_DOWN = 34;
+const PAGE_UP = 33;
 
 export default class Lecturer extends Student {
     private previousButton: JQuery;
@@ -62,9 +64,9 @@ export default class Lecturer extends Student {
         $('body').keyup((ev) => {
             let keyCode = ev.keyCode;
 
-            if (keyCode === ARROW_LEFT) {
+            if (keyCode === ARROW_LEFT || keyCode === PAGE_UP) {
                 socket.emit('move', -1);
-            } else if (keyCode === ARROW_RIGHT) {
+            } else if (keyCode === ARROW_RIGHT || keyCode === PAGE_DOWN) {
                 socket.emit('move', 1);
             }
         });
