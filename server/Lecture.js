@@ -34,6 +34,7 @@ class Lecture {
     getCurrentPage() {
         let previousIndex = this.currentPageIndex > this.min ? this.currentPageIndex - 1 : undefined;
         let nextIndex = this.currentPageIndex < this.max ? this.currentPageIndex + 1 : undefined;
+        let progress = (this.currentPageIndex - this.min) / (this.max - this.min);
 
         let currentPage = {
             index: this.currentPageIndex,
@@ -43,6 +44,7 @@ class Lecture {
             poll: this.polls[this.currentPageIndex],
             votes: this.votes[this.currentPageIndex],
             votedIds: this.votedIds[this.currentPageIndex] || [],
+            progress: progress,
         };
 
         return currentPage;
