@@ -60,11 +60,20 @@ class Lecture {
         this.save();
     }
 
-    setPoll(question, choices) {
-        this.polls[this.currentPageIndex] = {
-            question,
-            choices
+    setPoll(index, question, choices) {
+        if (!index) {
+            return;
         }
+
+        if (question && choices) {
+            this.polls[index] = {
+                question,
+                choices
+            }
+        } else {
+            delete this.polls[index];
+        }
+
 
         this.save();
     }

@@ -35,17 +35,14 @@ class Lecturer extends Student {
             io.emit('page', lecture.getCurrentPage());
         });
 
-        socket.on('poll', ({
-            question,
-            choices
-        }) => {
+        socket.on('poll', (data) => {
             let lecture = this.lectureRepository.getActiveLecture();
 
             if (!lecture) {
                 return;
             }
 
-            lecture.setPoll(question, choices);
+            lecture.setPoll(data.index, data.question, data.choices);
 
             io.emit('page', lecture.getCurrentPage());
         });
