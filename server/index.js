@@ -65,6 +65,10 @@ io.on('connection', function (socket) {
 
     console.log(`New connection from ${remoteAddress} as role "${role}" with username "${user}".`);
 
+    socket.on('disconnect', (reason) => {
+        console.log(`${user} has left the building.`);
+    });
+
     if (role === ROLE.LECTURER) {
         new Lecturer(user, socket, io);
     } else {
