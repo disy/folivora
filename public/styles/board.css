@@ -113,3 +113,14 @@ input {
     z-index: 100;
     transition: width 0.5s;
 }
+
+#systemMessage {
+    position: fixed;
+    top: 30%;
+    left: 0;
+    right: 0;
+    padding: 3rem;
+    text-align: center;
+    background-color: rgb(253, 253, 99);
+    font-size: 1.3rem;
+}

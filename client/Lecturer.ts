@@ -1,6 +1,7 @@
 import Student from './Student'
 import PollResultManager from './PollResultManager'
 import EditPollModal from './EditPollModal';
+import LectureModal from './LectureModal';
 
 const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
@@ -95,5 +96,18 @@ export default class Lecturer extends Student {
         this.pollResultButton.attr('disabled', 'disabled');
         this.pollResultButton.text('Poll result');
         this.pollResultButton.appendTo(barElement);
+
+        let lectureSelectionButton = $('<button>');
+        lectureSelectionButton.text('Lectures');
+        lectureSelectionButton.click(() => {
+            this.socket.emit('get', 'lectures', (data) => { console.log('lectures', data)
+                new LectureModal(data, (id) => {
+                    this.socket.emit('config', {
+                        activeLecture: id,
+                    });
+                });
+            });
+        });
+        lectureSelectionButton.appendTo(barElement);
     }
 }

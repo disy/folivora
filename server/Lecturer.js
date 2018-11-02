@@ -1,4 +1,5 @@
 const Student = require('./Student');
+const LectureRepository = require('./LectureRepository');
 
 class Lecturer extends Student {
     constructor(id, socket, io) {
@@ -6,19 +7,47 @@ class Lecturer extends Student {
 
         socket.join('lecturer');
 
-        socket.on('move', (direction) => {
-            this.lecture.move(direction);
+        socket.on('get', (param, response) => {
+            if (param === 'lectures') {
+                response(this.lectureRepository.getLectureData());
+            }
+        });
 
-            io.emit('page', this.lecture.getCurrentPage());
+        socket.on('config', (config) => {
+            if (config.activeLecture && this.lectureRepository.exists(config.activeLecture)) {
+                console.log(`Set active lecture: ${config.activeLecture}`);
+                //@TODO test
+                this.lectureRepository.setActiveLecture(config.activeLecture);
+
+                io.emit('page', this.lectureRepository.getLecture(config.activeLecture).getCurrentPage());
+            }
+        });
+
+        socket.on('move', (direction) => {
+            let lecture = this.lectureRepository.getActiveLecture();
+
+            if (!lecture) {
+                return;
+            }
+
+            lecture.move(direction);
+
+            io.emit('page', lecture.getCurrentPage());
         });
 
         socket.on('poll', ({
             question,
             choices
         }) => {
-            this.lecture.setPoll(question, choices);
+            let lecture = this.lectureRepository.getActiveLecture();
 
-            io.emit('page', this.lecture.getCurrentPage());
+            if (!lecture) {
+                return;
+            }
+
+            lecture.setPoll(question, choices);
+
+            io.emit('page', lecture.getCurrentPage());
         });
     }
 }

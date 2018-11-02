@@ -14,6 +14,7 @@ class LectureRepository {
         this.lectures = {};
         this.lectureData = {};
         this.lectureIds = [];
+        this.activeLectureId = undefined;
     }
 
     init() {
@@ -22,7 +23,13 @@ class LectureRepository {
         this.lectureData = readAllLectures();
         this.lectureIds = Object.keys(this.lectureData);
 
+        this.lectureIds.map(id => this.getLecture(id));
+
         console.log(`I found ${this.lectureIds.length} lecture(s).`);
+    }
+
+    exists(id) {
+        return this.lectureIds.indexOf(id) > -1;
     }
 
     getLecture(id) {
@@ -37,6 +44,20 @@ class LectureRepository {
         }
 
         return this.lectures[id];
+    }
+
+    setActiveLecture(id) {
+        this.activeLectureId = id;
+    }
+
+    getActiveLecture() {
+        if (this.activeLectureId) {
+            return this.getLecture(this.activeLectureId);
+        }
+    }
+
+    getLectureData() {
+        return this.lectureData;
     }
 
     getNumberOfLectures() {

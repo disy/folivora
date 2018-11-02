@@ -67,6 +67,8 @@ export default class LoginForm extends Modal {
         localStorage.setItem('token', token);
 
         this.resolve([socket, role, user]);
+
+        return false;
     }
 
     private async processForm() {

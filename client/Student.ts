@@ -3,16 +3,20 @@ import Page from "./Page";
 import VoteModal from './VoteModal'
 
 export default class Student {
-    constructor(protected id: string, protected socket:Socket) {
+    constructor(protected id: string, protected socket: Socket) {
         this.id = id;
         this.socket = socket;
+
+        $('#systemMessage').show().text('Connected. Waiting...');
 
         this.socket.on('page', (page) => page && this.onPage(page));
 
         this.socket.emit('ready');
     }
 
-    onPage(page) { console.log('onPage', page)
+    onPage(page) {
+        console.log('onPage', page)
+        $('#systemMessage').hide();
         new Page(page);
 
         let hasVoted = page.votedIds.indexOf(this.id) > -1;
