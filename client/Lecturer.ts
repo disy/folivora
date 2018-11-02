@@ -2,17 +2,25 @@ import Student from './Student'
 import PollResultManager from './PollResultManager'
 import EditPollModal from './EditPollModal';
 import LectureModal from './LectureModal';
+import ShowCommentModal from './ShowCommentModal';
 
 const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
 const PAGE_DOWN = 34;
 const PAGE_UP = 33;
 
+interface Comment {
+    index: number
+    date: Date,
+    comment: string
+}
+
 export default class Lecturer extends Student {
     private previousButton: JQuery;
     private nextButton: JQuery;
     private pollResultButton: JQuery;
     private editPollButton: JQuery;
+    private comments: Comment[] = [];
 
     constructor(id, socket) {
         super(id, socket);
@@ -62,30 +70,57 @@ export default class Lecturer extends Student {
             }
         })
 
-        this.initUi();
+        socket.on('comment', ({ index, date, comment }) => {
+            console.log(index, date, comment);
+
+            this.comments.push({
+                index,
+                comment,
+                date: new Date(date),
+            });
+        });
 
         $('body').keyup((ev) => {
             let keyCode = ev.keyCode;
 
             if (keyCode === ARROW_LEFT || keyCode === PAGE_UP) {
-                socket.emit('move', -1);
+                this.move(-1);
             } else if (keyCode === ARROW_RIGHT || keyCode === PAGE_DOWN) {
-                socket.emit('move', 1);
+                this.move(1);
             }
         });
     }
 
-    private initUi() {
+    private move(direction: -1|1) {
+        if (this.comments.length > 0) {
+            new ShowCommentModal(this.comments);
+
+            this.comments = [];
+
+            return;
+        }
+
+        if ($('.modal.show').length > 0) {
+            console.log('Do not move while modal is open.');
+
+            return;
+        }
+
+        this.socket.emit('move', direction);
+    }
+
+    protected initUi() {
+        super.initUi();
         let barElement = $('#navBar');
 
         this.previousButton = $('<button>');
         this.previousButton.text('Previous');
-        this.previousButton.click(() => this.socket.emit('move', -1));
+        this.previousButton.click(() => this.move(-1));
         this.previousButton.appendTo(barElement);
 
         this.nextButton = $('<button>');
         this.nextButton.text('Next');
-        this.nextButton.click(() => this.socket.emit('move', 1));
+        this.nextButton.click(() => this.move(1));
         this.nextButton.appendTo(barElement);
 
         this.editPollButton = $('<button>');
@@ -100,7 +135,8 @@ export default class Lecturer extends Student {
         let lectureSelectionButton = $('<button>');
         lectureSelectionButton.text('Lectures');
         lectureSelectionButton.click(() => {
-            this.socket.emit('get', 'lectures', (data) => { console.log('lectures', data)
+            this.socket.emit('get', 'lectures', (data) => {
+                console.log('lectures', data)
                 new LectureModal(data, (id) => {
                     this.socket.emit('config', {
                         activeLecture: id,

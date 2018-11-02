@@ -1,13 +1,21 @@
 import { Socket } from "socket.io";
 import Page from "./Page";
 import VoteModal from './VoteModal'
+import CommentModal from './CommentModal'
 
 export default class Student {
+    private systemMessageTimeout;
+    private commentButton: JQuery;
+
     constructor(protected id: string, protected socket: Socket) {
         this.id = id;
         this.socket = socket;
 
-        $('#systemMessage').show().text('Connected. Waiting...');
+        this.initUi();
+
+        this.systemMessageTimeout = setTimeout(() => {
+            $('#systemMessage').show().text('Connected. Waiting...');
+        }, 500);
 
         this.socket.on('page', (page) => page && this.onPage(page));
 
@@ -16,7 +24,19 @@ export default class Student {
 
     onPage(page) {
         console.log('onPage', page)
+
+        this.systemMessageTimeout && clearTimeout(this.systemMessageTimeout);
         $('#systemMessage').hide();
+
+        this.commentButton.off('click').on('click', () => {
+            new CommentModal((comment) => {
+                this.socket.emit('comment', {
+                    comment,
+                    index: page.index,
+                });
+            })
+        });
+
         new Page(page);
 
         let hasVoted = page.votedIds.indexOf(this.id) > -1;
@@ -27,5 +47,13 @@ export default class Student {
                 choice: choice,
             });
         });
+    }
+
+    protected initUi() {
+        let barElement = $('#navBar');
+
+        this.commentButton = $('<button>');
+        this.commentButton.text('Comment');
+        this.commentButton.appendTo(barElement);
     }
 }

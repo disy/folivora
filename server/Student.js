@@ -34,6 +34,20 @@ class Student {
                 });
             }
         });
+
+        socket.on('comment', (data) => {
+            if (!data || !data.index || !data.comment) {
+                return;
+            }
+
+            console.log(`${this.id} comments on slide ${data.index}: ${data.comment}`);
+
+            io.to('lecturer').emit('comment', {
+                index: data.index,
+                comment: data.comment,
+                date: new Date(),
+            });
+        })
     }
 }
 
