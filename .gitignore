@@ -1,6 +1,7 @@
 node_modules/
 public/scripts/bundle.js
 public/lectures/
-lecturer.json
+/lecturer.json
+/config.json
 database/
 /*.pdf

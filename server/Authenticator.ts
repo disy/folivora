@@ -1,6 +1,5 @@
 import * as ROLE from './ROLES';
-
-const userDatabase = require(__dirname + '/../lecturer.json');
+import Config from './Config'
 
 export default class Authenticator {
     public static isValid(role, user, token) {
@@ -12,7 +11,7 @@ export default class Authenticator {
     }
 
     public static isTokenValid(user, token) {
-        if (user && token && userDatabase[user] === token) {
+        if (user && token && Config.get('lecturer')[user] === token) {
             return true;
         }
 

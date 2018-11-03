@@ -1,7 +1,8 @@
 import app from './App'
 import LectureRepository from './LectureRepository';
+import Config from './Config'
 
-const PORT = process.argv[2] || 3000;
+const PORT = process.argv[2] || Config.get('port');
 
 let lectureRepository = LectureRepository.get();
 lectureRepository.init();

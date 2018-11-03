@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode=development",
-    "run": "ts-node -P tsconfig.server.json ./server/index.js",
+    "start": "ts-node -P tsconfig.server.json ./server/index.ts",
     "dev-server": "nodemon ./server/index.ts",
     "dev-client": "webpack --mode=development --watch"
   },
