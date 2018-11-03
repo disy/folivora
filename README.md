@@ -4,6 +4,7 @@
 - `yarn install`
 - `yarn build`
 - Create `lecturer.json` with an empty object as content (`{}`)
+- `mkdir database`
 - `mkdir -p public/lectures/YOUR-LECTURE-NAME` (dashes will be replaced by spaces)
 - `pdf2svg YOUR.pdf public/lectures/YOUR-LECTURE-NAME/%d.svg all`
 - `yarn run`
