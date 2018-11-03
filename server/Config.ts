@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const CONFIG = (() => {
-    const CONFIG_FILENAME = '../config.json';
+    const CONFIG_FILENAME = __dirname + '/../config.json';
     const CONFIG_FILE = fs.existsSync(CONFIG_FILENAME) ? require(CONFIG_FILENAME) : {};
 
     const DEFAULT_CONFIG = {
