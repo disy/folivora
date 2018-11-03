@@ -1,6 +1,19 @@
-const Database = require('./Database');
+import Database from './Database';
 
-class Lecture {
+export default class Lecture {
+    private id;
+    private name;
+    private path;
+    private min;
+    private max;
+
+    private currentPageIndex;
+    private polls;
+    private votes;
+    private votedIds;
+
+    private collection;
+
     constructor(data) {
         this.id = data.id;
         this.name = data.name;
@@ -114,21 +127,19 @@ class Lecture {
         this.collection.update({
             id: this.id
         }, {
-            $set: {
-                id: this.id,
-                currentPageIndex: this.currentPageIndex,
-                polls: this.polls,
-                votes: this.votes,
-                votedIds: this.votedIds,
-            }
-        }, {
-            upsert: true
-        }, (err, result) => {
-            if (err) {
-                console.log('Error while saving lecture: ', err);
-            }
-        });
+                $set: {
+                    id: this.id,
+                    currentPageIndex: this.currentPageIndex,
+                    polls: this.polls,
+                    votes: this.votes,
+                    votedIds: this.votedIds,
+                }
+            }, {
+                upsert: true
+            }, (err, result) => {
+                if (err) {
+                    console.log('Error while saving lecture: ', err);
+                }
+            });
     }
 }
-
-module.exports = Lecture;

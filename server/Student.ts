@@ -1,6 +1,11 @@
-const LectureRepository = require('./LectureRepository');
+import LectureRepository from './LectureRepository';
 
-class Student {
+export default class Student {
+    protected id;
+    protected socket;
+    protected io;
+    protected lectureRepository;
+
     constructor(id, socket, io) {
         this.id = id;
         this.socket = socket;
@@ -50,5 +55,3 @@ class Student {
         })
     }
 }
-
-module.exports = Student;

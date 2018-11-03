@@ -3,18 +3,21 @@ const path = require('path');
 const publicDir = __dirname + '/../public/';
 const rootDir = publicDir + 'lectures/';
 const slideFilenameRegex = /^([1-9]\d*)\.svg$/
-const Lecture = require('./Lecture');
+import Lecture from './Lecture';
 
-class LectureRepository {
+export default class LectureRepository {
+    private static instance = new LectureRepository();
+
     static get() {
         return LectureRepository.instance;
     }
 
+    private lectures = {};
+    private lectureData = {};
+    private lectureIds = [];
+    private activeLectureId = undefined;
+
     constructor() {
-        this.lectures = {};
-        this.lectureData = {};
-        this.lectureIds = [];
-        this.activeLectureId = undefined;
     }
 
     init() {
@@ -64,7 +67,6 @@ class LectureRepository {
         return this.lectureIds.length;
     }
 }
-LectureRepository.instance = new LectureRepository();
 
 function readAllLectures() {
     let items = fs.readdirSync(rootDir);
@@ -129,5 +131,3 @@ function readLecture(id) {
 
     return lecture;
 }
-
-module.exports = LectureRepository;

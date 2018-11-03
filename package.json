@@ -5,11 +5,13 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode=development",
-    "run": "node ./server/index.js",
-    "dev-server": "nodemon ./server/index.js",
+    "run": "ts-node -P tsconfig.server.json ./server/index.js",
+    "dev-server": "nodemon ./server/index.ts",
     "dev-client": "webpack --mode=development --watch"
   },
   "dependencies": {
+    "@types/express": "^4.16.0",
+    "@types/express-handlebars": "^0.0.30",
     "@types/jquery": "^3.3.22",
     "@types/socket.io": "^1.4.38",
     "@types/socket.io-client": "^1.4.32",
@@ -23,6 +25,7 @@
     "socket.io-client": "^2.1.1",
     "tingodb": "^0.6.1",
     "ts-loader": "^5.2.2",
+    "ts-node": "^7.0.1",
     "typescript": "^3.1.4",
     "uuid": "^3.3.2",
     "webpack": "^4.23.1"
@@ -32,9 +35,11 @@
     "webpack-cli": "^3.1.2"
   },
   "nodemonConfig": {
-    "ignore": [
-      "public/*",
-      "views/*"
-    ]
+    "watch": [
+      "server/"
+    ],
+    "execMap": {
+      "ts": "ts-node -P tsconfig.server.json"
+    }
   }
 }

@@ -1,7 +1,6 @@
-const Student = require('./Student');
-const LectureRepository = require('./LectureRepository');
+import Student from './Student';
 
-class Lecturer extends Student {
+export default class Lecturer extends Student {
     constructor(id, socket, io) {
         super(id, socket, io);
 
@@ -16,7 +15,7 @@ class Lecturer extends Student {
         socket.on('config', (config) => {
             if (config.activeLecture && this.lectureRepository.exists(config.activeLecture)) {
                 console.log(`Set active lecture: ${config.activeLecture}`);
-                //@TODO test
+
                 this.lectureRepository.setActiveLecture(config.activeLecture);
 
                 io.emit('page', this.lectureRepository.getLecture(config.activeLecture).getCurrentPage());
@@ -48,5 +47,3 @@ class Lecturer extends Student {
         });
     }
 }
-
-module.exports = Lecturer;
