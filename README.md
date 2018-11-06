@@ -1,4 +1,4 @@
-# Slide everything
+# Folivora
 
 ## Quick start
 - `yarn install`
