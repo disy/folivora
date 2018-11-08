@@ -18,6 +18,18 @@ export default class Connection {
     public connect(role, user, token): Promise<[SocketIOClient.Socket, string, string]> {
         const socket = io(`?role=${role}&user=${user || ''}&token=${token || ''}`);
 
+        socket.on('connect_error', (err) => {
+            console.warn('Connection error:', err);
+
+            $('#systemMessage').show().text('Connection error. Trying to reconnect...');
+        });
+
+        socket.on('reconnect', () => {
+            console.log('Successfully reconnected');
+
+            $('#systemMessage').hide();
+        });
+
         return new Promise((resolve, reject) => {
             socket.once('connect', () => resolve([socket, role, user]));
 
