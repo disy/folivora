@@ -15,7 +15,7 @@ export default class Page {
         }
 
         $('body').attr('data-currentIndex', this.index);
-        $('#current-slide').css('background-image', `url(${this.url})`);
+        $('#current-slide').css('background-image', `url(${this.url}), url(images/loading.svg)`);
 
         $('#progress').css('width', `${data.progress * 100}%`);
     }
