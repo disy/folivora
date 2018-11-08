@@ -18,7 +18,11 @@ function initUI(socket) {
     let logoutElement = $('<button>');
     logoutElement.text('Logout');
     logoutElement.appendTo(barElement);
-    logoutElement.click(() => logout(socket));
+    logoutElement.click(() => {
+        if (confirm('Please confirm that you like to log-out.')) {
+            logout(socket);
+        }
+    });
 }
 
 function logout(socket?) {
