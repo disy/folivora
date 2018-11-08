@@ -1,4 +1,6 @@
+import * as crypto from 'crypto';
 import Database from './Database';
+import app from './App'
 
 export default class Lecture {
     private id;
@@ -64,7 +66,14 @@ export default class Lecture {
     }
 
     getUrl(index) {
-        return index ? `${this.path}/${index}.svg` : undefined;
+        if (!index) {
+            return;
+        }
+
+        let path = `/${this.path}/${index}.svg`;
+        let hash = crypto.createHmac('sha256', app.getSecretKey()).update(path).digest('hex');
+
+        return `${path}?hash=${hash}`;
     }
 
     move(direction) {

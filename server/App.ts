@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import * as express from 'express';
 import * as expressHandlebars from 'express-handlebars';
 import { Server } from 'http';
@@ -12,6 +13,12 @@ class App {
     public http;
     public websocket;
 
+    private secretKey = crypto.randomBytes(256);
+
+    public getSecretKey() {
+        return this.secretKey;
+    }
+
     constructor() {
         this.express = express();
         this.http = new Server(this.express);
@@ -23,6 +30,7 @@ class App {
         this.mountWebsocketMiddleware();
         this.mountWebsocketListener();
 
+        this.express.use(this.expressLectureProtectionMiddleware)
         this.express.use(express.static('public'));
     }
 
@@ -71,6 +79,23 @@ class App {
                 new Student(user, socket, this.websocket);
             }
         });
+    }
+
+    private expressLectureProtectionMiddleware = (req, res, next) => {
+        if (!/^\/lectures\//.test(req.url)) {
+            return next();
+        }
+
+        if (req.query.hash) {
+            let hash = crypto.createHmac('sha256', this.getSecretKey()).update(req.path).digest('hex');
+
+            if (hash === req.query.hash) {
+                return next();
+            }
+        }
+
+        res.status(403);
+        res.end('You are not allowed');
     }
 }
 
