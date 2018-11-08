@@ -1,7 +1,9 @@
 node_modules/
-public/scripts/bundle.js
-public/lectures/
+/public/scripts/bundle.js
+/public/lectures/
+/public/styles/bundle.css
 /lecturer.json
 /config.json
 database/
 /*.pdf
+/yarn-error.log
