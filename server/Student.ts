@@ -45,6 +45,12 @@ export default class Student {
                 return;
             }
 
+            if (data.comment.length > 500) {
+                console.log(`Truncate ${data.comment.length} character comment.`);
+
+                data.comment = data.comment.slice(0, 500);
+            }
+
             console.log(`${this.id} comments on slide ${data.index}: ${data.comment}`);
 
             io.to('lecturer').emit('comment', {

@@ -8,7 +8,7 @@ export default class CommentModal extends Modal {
         let bodyElement = this.element.find('.modal-body');
         bodyElement.empty();
 
-        let commentElement = $('<input class="form-control" type="text"/>');
+        let commentElement = $('<input class="form-control" type="text" maxlength="500"/>');
         commentElement.appendTo(bodyElement);
 
         let footerElement = this.element.find('.modal-footer');
