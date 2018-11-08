@@ -145,5 +145,15 @@ export default class Lecturer extends Student {
             });
         });
         lectureSelectionButton.appendTo(barElement);
+
+        let layoutButton = $('<button>');
+        layoutButton.text('Layout');
+        layoutButton.click(() => {
+            let currentLayout = parseInt($('body').attr('data-layout'));
+            let nextLayout = isNaN(currentLayout) ? 0 : (currentLayout + 1) % 3;
+
+            $('body').attr('data-layout', nextLayout);
+        });
+        layoutButton.appendTo(barElement);
     }
 }
