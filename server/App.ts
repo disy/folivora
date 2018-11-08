@@ -113,4 +113,6 @@ class App {
 
 let app = new App();
 
+console.log('Student code: ' + app.getStudentCode());
+
 export default app;
