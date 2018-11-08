@@ -9,6 +9,7 @@ const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
 const PAGE_DOWN = 34;
 const PAGE_UP = 33;
+const POINT = 190;
 
 interface Comment {
     index: number
@@ -88,6 +89,8 @@ export default class Lecturer extends Student {
                 this.move(-1);
             } else if (keyCode === ARROW_RIGHT || keyCode === PAGE_DOWN) {
                 this.move(1);
+            } else if (keyCode === POINT) {
+                $('body').toggleClass('blank');
             }
         });
     }
