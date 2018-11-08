@@ -3,6 +3,7 @@ import PollResultManager from './PollResultManager'
 import EditPollModal from './EditPollModal';
 import LectureModal from './LectureModal';
 import ShowCommentModal from './ShowCommentModal';
+import InfoModal from './InfoModal'
 
 const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
@@ -155,5 +156,14 @@ export default class Lecturer extends Student {
             $('body').attr('data-layout', nextLayout);
         });
         layoutButton.appendTo(barElement);
+
+        let infoButton = $('<button>');
+        infoButton.text('Info');
+        infoButton.click(() => {
+            this.socket.emit('get', 'info', (data) => {
+                new InfoModal(data.code);
+            });
+        });
+        infoButton.appendTo(barElement);
     }
 }

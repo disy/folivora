@@ -1,4 +1,5 @@
 import Student from './Student';
+import app from './App';
 
 export default class Lecturer extends Student {
     constructor(id, socket, io) {
@@ -9,6 +10,10 @@ export default class Lecturer extends Student {
         socket.on('get', (param, response) => {
             if (param === 'lectures') {
                 response(this.lectureRepository.getLectureData());
+            } else if (param === 'info') {
+                response({
+                    code: app.getStudentCode()
+                });
             }
         });
 

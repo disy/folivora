@@ -222,3 +222,14 @@ input {
         margin: 0.3rem 0;
     }
 }
+
+.infoModal {
+    &__url {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    &__code {
+        text-align: center;
+        font-size: 3rem;
+    }
+}

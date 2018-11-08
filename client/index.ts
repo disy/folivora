@@ -2,6 +2,7 @@ import Lecturer from "./Lecturer";
 import Student from "./Student";
 import LoginForm from "./LoginForm";
 import Connection from "./Connection";
+import Utils from './Utils'
 
 function initUI(socket) {
     let pollElement = $('<div>');
@@ -20,7 +21,7 @@ function initUI(socket) {
     logoutElement.click(() => logout(socket));
 }
 
-function logout(socket) {
+function logout(socket?) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
@@ -33,14 +34,15 @@ function logout(socket) {
         socket.close();
     }
 
-    window.location = window.location;
+    (<any> window.location) = window.location.pathname;
 }
 
-function init() {
+async function init() {
+    let code = window.location.hash.replace(/^#/, '');
     let role = localStorage.getItem('role');
     let connectionPromise;
 
-    if (!role) {
+    if (!role && !code) {
         let loginForm = new LoginForm();
 
         connectionPromise = loginForm.getPromise();
@@ -48,7 +50,19 @@ function init() {
         let token = localStorage.getItem('token');
         let user = localStorage.getItem('user');
 
-        connectionPromise = Connection.get().connect(role, user, token);
+        if ((!token || !user) && code) {
+            role = 'student';
+            user = Utils.generateId(20);
+            token = await Utils.sha256(user + '|' + code);
+        }
+
+        connectionPromise = Connection.get().connect(role, user, token).then(data => {
+            localStorage.setItem('role', role);
+            localStorage.setItem('user', user);
+            localStorage.setItem('token', token);
+
+            return data;
+        });
     }
 
     connectionPromise.then(([socket, role, user]) => {
@@ -59,6 +73,8 @@ function init() {
         } else {
             new Student(user, socket);
         }
+    }).catch(() => {
+        logout();
     });
 }
 

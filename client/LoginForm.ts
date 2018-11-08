@@ -34,8 +34,10 @@ export default class LoginForm extends Modal {
         this.element.find('input[type="radio"]').change(function () {
             if ($(this).val() === 'lecturer') {
                 $('.credentials').show();
+                $('.code').hide();
             } else {
                 $('.credentials').hide();
+                $('.code').show();
             }
         });
 
@@ -75,6 +77,7 @@ export default class LoginForm extends Modal {
         let role = this.formElement.find('[name="role"]:checked').val();
         let user = this.formElement.find('[name="username"]').val();
         let password = this.formElement.find('[name="password"]').val();
+        let code = this.formElement.find('[name="code"]').val();
         let token = '';
 
         if (role === 'lecturer') {
@@ -86,6 +89,7 @@ export default class LoginForm extends Modal {
         } else {
             role = 'student';
             user = Utils.generateId(20);
+            token = await Utils.sha256(user + '|' + code);
         }
 
         return [role, user, token];

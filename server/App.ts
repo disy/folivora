@@ -3,6 +3,7 @@ import * as express from 'express';
 import * as expressHandlebars from 'express-handlebars';
 import { Server } from 'http';
 import * as socketIO from 'socket.io';
+const randomString = require("randomstring");
 import Authenticator from './Authenticator';
 import * as ROLE from './ROLES';
 import Lecturer from './Lecturer';
@@ -17,6 +18,17 @@ class App {
 
     public getSecretKey() {
         return this.secretKey;
+    }
+
+    private studentCode = randomString.generate({
+        length: 6,
+        readable: true,
+        charset: 'alphanumeric',
+        capitalization: 'uppercase'
+    });
+
+    public getStudentCode() {
+        return this.studentCode;
     }
 
     constructor() {

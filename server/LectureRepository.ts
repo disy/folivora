@@ -5,6 +5,15 @@ const rootDir = publicDir + 'lectures/';
 const slideFilenameRegex = /^([1-9]\d*)\.svg$/
 import Lecture from './Lecture';
 
+interface LectureData {
+    path: string
+    length: number
+    min: number
+    max: number
+    name: string
+    id: string
+}
+
 export default class LectureRepository {
     private static instance = new LectureRepository();
 
@@ -13,7 +22,7 @@ export default class LectureRepository {
     }
 
     private lectures = {};
-    private lectureData = {};
+    private lectureData:{[key: string]: LectureData} = {};
     private lectureIds = [];
     private activeLectureId = undefined;
 
@@ -68,7 +77,7 @@ export default class LectureRepository {
     }
 }
 
-function readAllLectures() {
+function readAllLectures():{[key: string]: LectureData} {
     let items = fs.readdirSync(rootDir);
     let lectures = {};
 
@@ -85,7 +94,7 @@ function readAllLectures() {
     return lectures;
 }
 
-function readLecture(id) {
+function readLecture(id): LectureData {
     let dir = rootDir + '/' + id;
     let slides = fs.readdirSync(dir);
     let lecture = {
