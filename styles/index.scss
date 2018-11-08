@@ -135,10 +135,11 @@ input {
         margin-top: 0.3rem;
 
         &:after {
-            content: attr(data-percentage);
+            content: attr(data-label);
             float: right;
             font-style: italic;
             line-height: 2rem;
+            white-space: nowrap;
         }
     }
 }

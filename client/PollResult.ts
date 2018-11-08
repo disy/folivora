@@ -34,11 +34,14 @@ export default class PollResult {
             barElement.attr('data-choice', choice);
             barElement.css('background-color', COLORS[choiceIndex % COLORS.length]);
             barElement.css('width', `${percentage}%`);
-            barElement.attr('data-percentage', (Math.round(percentage * 10) / 10) + '%');
+            barElement.attr('data-label', `${Math.round(percentage * 10) / 10} %`);
             barElement.appendTo(choiceElement);
 
             choiceIndex++;
         }
+
+        body.append('<p class="poll-result__total">');
+        this.updateTotalVotes();
 
         this.element.modal('show');
     }
@@ -55,11 +58,17 @@ export default class PollResult {
             let percentage = votes / this.totalVotes * 100;
 
             barElement.css('width', `${percentage}%`);
-            barElement.attr('data-percentage', (Math.round(percentage * 10) / 10) + '%');
+            barElement.attr('data-label', `${Math.round(percentage * 10) / 10} %`);
         }
+
+        this.updateTotalVotes();
     }
 
     getNumberOfVotes() {
         return this.totalVotes;
+    }
+
+    updateTotalVotes() {
+        this.element.find('.poll-result__total').text(`${this.totalVotes} people have voted.`);
     }
 }
