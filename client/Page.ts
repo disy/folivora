@@ -7,15 +7,15 @@ export default class Page {
         this.url = data.url;
 
         if (data.previousUrl) {
-            $('#preloading').attr('src', data.nextUrl);
+            $('#previous-slide').css('background-image', `url(${data.previousUrl})`);
         }
 
         if (data.nextUrl) {
-            $('#preloading2').attr('src', data.nextUrl);
+            $('#next-slide').css('background-image', `url(${data.nextUrl})`);
         }
 
         $('body').attr('data-currentIndex', this.index);
-        $('body').css('background-image', `url(${this.url})`);
+        $('#current-slide').css('background-image', `url(${this.url})`);
 
         $('#progress').css('width', `${data.progress * 100}%`);
     }
