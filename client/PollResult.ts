@@ -20,14 +20,22 @@ export default class PollResult {
         for (let choice of this.choices) {
             let votes = this.votes[choice] || 0;
             let percentage = this.totalVotes === 0 ? 0 : votes / this.totalVotes * 100;
-            let choiceElement = $('<p>');
+            let choiceElement = $('<div>');
             choiceElement.addClass('poll-result__item');
-            choiceElement.text(choice);
-            choiceElement.attr('data-choice', choice);
-            choiceElement.css('background-color', COLORS[choiceIndex % COLORS.length]);
-            choiceElement.css('width', `${percentage}%`);
-            choiceElement.attr('data-percentage', (Math.round(percentage * 10) / 10) + '%');
             choiceElement.appendTo(body);
+
+            let textElement = $('<p>');
+            textElement.addClass('poll-result__text');
+            textElement.text(choice);
+            textElement.appendTo(choiceElement);
+
+            let barElement = $('<div>');
+            barElement.addClass('poll-result__bar');
+            barElement.attr('data-choice', choice);
+            barElement.css('background-color', COLORS[choiceIndex % COLORS.length]);
+            barElement.css('width', `${percentage}%`);
+            barElement.attr('data-percentage', (Math.round(percentage * 10) / 10) + '%');
+            barElement.appendTo(choiceElement);
 
             choiceIndex++;
         }
@@ -42,12 +50,12 @@ export default class PollResult {
         this.totalVotes++;
 
         for (let choice in this.votes) {
-            let choiceElement = this.element.find(`[data-choice="${choice}"]`);
+            let barElement = this.element.find(`[data-choice="${choice}"]`);
             let votes = this.votes[choice];
             let percentage = votes / this.totalVotes * 100;
 
-            choiceElement.css('width', `${percentage}%`);
-            choiceElement.attr('data-percentage', (Math.round(percentage * 10) / 10) + '%');
+            barElement.css('width', `${percentage}%`);
+            barElement.attr('data-percentage', (Math.round(percentage * 10) / 10) + '%');
         }
     }
 

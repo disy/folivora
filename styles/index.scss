@@ -76,6 +76,17 @@ input {
     width: 100%;
 }
 
+.btn-vote {
+    white-space: normal;
+    text-align: left;
+}
+
+#voteModal {
+    li {
+        margin: 0.5rem 0;
+    }
+}
+
 .pollBar {
     display: none;
     position: fixed;
@@ -107,16 +118,28 @@ input {
     }
 }
 
-.poll-result__item {
-    background-color: orange;
-    padding: 0.2rem 0.5rem;
-    margin-bottom: 0.5rem;
-    min-width: 3rem;
+.poll-result {
+    &__item {
+        padding: 0.2rem 0.5rem;
+        margin-bottom: 0.5rem;
+    }
 
-    &:after {
-        content: attr(data-percentage);
-        float: right;
-        font-style: italic;
+    &__text {
+        margin: 0;
+    }
+
+    &__bar {
+        background-color: orange;
+        min-width: 1px;
+        height: 2rem;
+        margin-top: 0.3rem;
+
+        &:after {
+            content: attr(data-percentage);
+            float: right;
+            font-style: italic;
+            line-height: 2rem;
+        }
     }
 }
 

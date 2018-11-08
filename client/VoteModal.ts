@@ -43,7 +43,7 @@ export default class VoteModal extends Modal {
         let itemElement = $('<li>');
         let choiceElement = $('<button>');
 
-        choiceElement.addClass('btn btn-primary');
+        choiceElement.addClass('btn btn-success btn-vote');
         choiceElement.text(choice);
         choiceElement.appendTo(itemElement);
         itemElement.appendTo(this.listElement);
