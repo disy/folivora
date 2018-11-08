@@ -8,7 +8,7 @@ export default class PollResult {
         this.element = $('#pollResultModal');
 
         for (let choice in this.votes) {
-            this.totalVotes += this.votes[choice];
+            this.totalVotes += this.votes[choice] || 0;
         }
     }
 
@@ -18,8 +18,8 @@ export default class PollResult {
 
         let choiceIndex = 0;
         for (let choice of this.choices) {
-            let votes = this.votes[choice];
-            let percentage = votes / this.totalVotes * 100;
+            let votes = this.votes[choice] || 0;
+            let percentage = this.totalVotes === 0 ? 0 : votes / this.totalVotes * 100;
             let choiceElement = $('<p>');
             choiceElement.addClass('poll-result__item');
             choiceElement.text(choice);
