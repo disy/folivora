@@ -12,7 +12,8 @@ export default class Lecturer extends Student {
                 response(this.lectureRepository.getLectureData());
             } else if (param === 'info') {
                 response({
-                    code: app.getStudentCode()
+                    code: app.getStudentCode(),
+                    connectedUsers: app.getNumberOfConnectedUsers()
                 });
             }
         });

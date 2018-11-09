@@ -27,6 +27,12 @@ export default class Lecturer extends Student {
     constructor(id, socket) {
         super(id, socket);
 
+        socket.on('statistic', (data) => {
+            console.log('statistic', data);
+
+            InfoModal.updateStatistic(data);
+        });
+
         socket.on('vote', ({
             slideIndex,
             choice
@@ -95,7 +101,7 @@ export default class Lecturer extends Student {
         });
     }
 
-    private move(direction: -1|1) {
+    private move(direction: -1 | 1) {
         if (this.comments.length > 0) {
             new ShowCommentModal(this.comments);
 
@@ -163,10 +169,18 @@ export default class Lecturer extends Student {
         let infoButton = $('<button>');
         infoButton.text('Info');
         infoButton.click(() => {
-            this.socket.emit('get', 'info', (data) => {
-                new InfoModal(data.code);
-            });
+            this.get('info').then(data => {
+                new InfoModal(data.code, data.connectedUsers);
+            })
         });
         infoButton.appendTo(barElement);
+    }
+
+    private get(key: string): Promise<any> {
+        return new Promise(resolve => {
+            this.socket.emit('get', key, (data) => {
+                resolve(data);
+            });
+        })
     }
 }

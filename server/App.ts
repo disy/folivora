@@ -14,6 +14,8 @@ class App {
     public http;
     public websocket;
 
+    private connectedUsers = 0;
+
     private secretKey = crypto.randomBytes(256);
 
     public getSecretKey() {
@@ -44,6 +46,10 @@ class App {
 
         this.express.use(this.expressLectureProtectionMiddleware)
         this.express.use(express.static('public'));
+    }
+
+    public getNumberOfConnectedUsers() {
+        return this.connectedUsers;
     }
 
     private mountRoutes() {
@@ -81,8 +87,16 @@ class App {
         this.websocket.on('connection', (socket) => {
             let { role, user } = socket.handshake.query;
 
+            this.connectedUsers++;
+
+            this.emitStatistic();
+
             socket.on('disconnect', (reason) => {
                 console.log(`${user} has left the building.`);
+
+                this.connectedUsers--;
+
+                this.emitStatistic();
             });
 
             if (role === ROLE.LECTURER) {
@@ -90,6 +104,12 @@ class App {
             } else {
                 new Student(user, socket, this.websocket);
             }
+        });
+    }
+
+    private emitStatistic() {
+        this.websocket.to('lecturer').emit('statistic', {
+            connectedUsers: this.connectedUsers,
         });
     }
 
