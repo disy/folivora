@@ -94,6 +94,8 @@ export default class Lecture {
             }
         } else {
             delete this.polls[index];
+            delete this.votes[index];
+            delete this.votedIds[index];
         }
 
 
