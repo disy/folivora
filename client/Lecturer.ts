@@ -86,6 +86,8 @@ export default class Lecturer extends Student {
                 comment,
                 date: new Date(date),
             });
+
+            this.commentButton.attr('data-badge', this.comments.length);
         });
 
         $('body').keyup((ev) => {
@@ -106,6 +108,7 @@ export default class Lecturer extends Student {
             new ShowCommentModal(this.comments);
 
             this.comments = [];
+            this.commentButton.removeAttr('data-badge');
 
             return;
         }

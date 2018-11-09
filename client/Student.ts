@@ -6,7 +6,7 @@ import SystemMessage from "./SystemMessage";
 
 export default class Student {
     private systemMessageTimeout;
-    private commentButton: JQuery;
+    protected commentButton: JQuery;
 
     constructor(protected id: string, protected socket: Socket) {
         this.id = id;
