@@ -195,8 +195,16 @@ input {
     right: 0;
     padding: 3rem;
     text-align: center;
-    background-color: rgb(253, 253, 99);
+    background-color: #fff;
     font-size: 1.3rem;
+
+    &[data-level="warning"] {
+        background-color: #fdfd63;
+    }
+
+    &[data-level="info"] {
+        background-color: #63b3fd;
+    }
 }
 
 .bar {

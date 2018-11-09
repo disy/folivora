@@ -1,4 +1,5 @@
 import * as io from 'socket.io-client'
+import SystemMessage, { Level } from './SystemMessage';
 
 export default class Connection {
     private static instance;
@@ -21,13 +22,13 @@ export default class Connection {
         socket.on('connect_error', (err) => {
             console.warn('Connection error:', err);
 
-            $('#systemMessage').show().text('Connection error. Trying to reconnect...');
+            SystemMessage.show('Connection error. Trying to reconnect...', Level.Warning);
         });
 
         socket.on('reconnect', () => {
             console.log('Successfully reconnected');
 
-            $('#systemMessage').hide();
+            SystemMessage.hide();
         });
 
         return new Promise((resolve, reject) => {

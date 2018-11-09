@@ -2,6 +2,7 @@ import { Socket } from "socket.io";
 import Page from "./Page";
 import VoteModal from './VoteModal'
 import CommentModal from './CommentModal'
+import SystemMessage from "./SystemMessage";
 
 export default class Student {
     private systemMessageTimeout;
@@ -14,7 +15,7 @@ export default class Student {
         this.initUi();
 
         this.systemMessageTimeout = setTimeout(() => {
-            $('#systemMessage').show().text('Connected. Waiting...');
+            SystemMessage.show('Connected. Waiting...');
         }, 500);
 
         this.socket.on('page', (page) => page && this.onPage(page));
@@ -26,7 +27,7 @@ export default class Student {
         console.log('onPage', page)
 
         this.systemMessageTimeout && clearTimeout(this.systemMessageTimeout);
-        $('#systemMessage').hide();
+        SystemMessage.hide();
 
         this.commentButton.off('click').on('click', () => {
             new CommentModal((comment) => {
