@@ -69,7 +69,7 @@ class App {
     private mountWebsocketMiddleware() {
         this.websocket.use((socket, next) => {
             let { role, token, user } = socket.handshake.query;
-            let remoteAddress = socket.request.connection.remoteAddress;
+            let remoteAddress = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
 
             if (Authenticator.isValid(role, user, token)) {
                 console.log(`New connection from ${remoteAddress} as role "${role}" with username "${user}".`);
