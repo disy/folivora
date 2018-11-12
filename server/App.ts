@@ -71,6 +71,8 @@ class App {
             let { role, token, user } = socket.handshake.query;
             let remoteAddress = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
 
+            user = typeof user === 'string' ? user.toLowerCase() : user;
+
             if (Authenticator.isValid(role, user, token)) {
                 console.log(`New connection from ${remoteAddress} as role "${role}" with username "${user}".`);
 

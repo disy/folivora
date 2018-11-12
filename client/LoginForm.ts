@@ -27,6 +27,10 @@ export default class LoginForm extends Modal {
     }
 
     private registerHandler() {
+        this.element.find('[name="code"]').keyup(function () {
+            $(this).val($(this).val().toString().toUpperCase());
+        });
+
         this.element.find('input').on('input', () => {
             $('#loginModal .bg-warning').hide().text('');
         });
@@ -75,9 +79,9 @@ export default class LoginForm extends Modal {
 
     private async processForm() {
         let role = this.formElement.find('[name="role"]:checked').val();
-        let user = this.formElement.find('[name="username"]').val();
+        let user = this.formElement.find('[name="username"]').val().toString().toLowerCase();
         let password = this.formElement.find('[name="password"]').val();
-        let code = this.formElement.find('[name="code"]').val();
+        let code = this.formElement.find('[name="code"]').val().toString().toUpperCase();
         let token = '';
 
         if (role === 'lecturer') {
@@ -89,7 +93,8 @@ export default class LoginForm extends Modal {
         } else {
             role = 'student';
             user = Utils.generateId(20);
-            token = await Utils.sha256(user + '|' + code);
+            let hash = await Utils.sha256(user + '|' + code);
+            token = code + '|' + hash;
         }
 
         return [role, user, token];
