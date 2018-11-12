@@ -55,11 +55,11 @@ export default class Student {
             }
 
             if (!SpamProtection.get().isAllowed(this.remoteAddress, 'comment')) {
-                console.log(`${this.id} sent to much comments and was therefore blocked.`);
+                console.log(`${this.id} sent too many comments and was therefore blocked.`);
 
                 return response({
                     name: 'spam-protection',
-                    message: 'You sent to much comments. If you have further questions, please wait a minute or raise your hand.',
+                    message: 'You sent too many comments. If you have further questions, please wait a minute or raise your hand.',
                 });
             }
 
