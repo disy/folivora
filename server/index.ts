@@ -1,3 +1,4 @@
+import './ConsoleLog'
 import app from './App'
 import LectureRepository from './LectureRepository';
 import Config from './Config'
