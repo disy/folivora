@@ -34,6 +34,12 @@ export default class Student {
                 this.socket.emit('comment', {
                     comment,
                     index: page.index,
+                }, (error) => {
+                    if (!error) {
+                        return;
+                    }
+
+                    alert(error.message || error);
                 });
             })
         });

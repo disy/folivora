@@ -1,16 +1,19 @@
 import LectureRepository from './LectureRepository';
+import SpamProtection from './SpamProtection';
 
 export default class Student {
     protected id;
     protected socket;
     protected io;
     protected lectureRepository;
+    protected remoteAddress;
 
     constructor(id, socket, io) {
         this.id = id;
         this.socket = socket;
         this.io = io;
         this.lectureRepository = LectureRepository.get();
+        this.remoteAddress = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
 
         socket.on('ready', () => {
             let lecture = this.lectureRepository.getActiveLecture();
@@ -40,7 +43,7 @@ export default class Student {
             }
         });
 
-        socket.on('comment', (data) => {
+        socket.on('comment', (data, response) => {
             if (!data || !data.index || !data.comment) {
                 return;
             }
@@ -49,6 +52,15 @@ export default class Student {
                 console.log(`Truncate ${data.comment.length} character comment.`);
 
                 data.comment = data.comment.slice(0, 500);
+            }
+
+            if (!SpamProtection.get().isAllowed(this.remoteAddress, 'comment')) {
+                console.log(`${this.id} sent to much comments and was therefore blocked.`);
+
+                return response({
+                    name: 'spam-protection',
+                    message: 'You sent to much comments. If you have further questions, please wait a minute or raise your hand.',
+                });
             }
 
             console.log(`${this.id} comments on slide ${data.index}: ${data.comment}`);
