@@ -7,3 +7,4 @@ node_modules/
 database/
 /*.pdf
 /yarn-error.log
+/*.log
