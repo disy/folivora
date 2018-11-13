@@ -17,7 +17,9 @@ export default class Connection {
     }
 
     public connect(role, user, token): Promise<[SocketIOClient.Socket, string, string]> {
-        const socket = io(`?role=${role}&user=${user || ''}&token=${token || ''}`);
+        const socket = io(`?role=${role}&user=${user || ''}&token=${token || ''}`, {
+            path: window.location.pathname + 'socket.io/'
+        });
 
         socket.on('connect_error', (err) => {
             console.warn('Connection error:', err);

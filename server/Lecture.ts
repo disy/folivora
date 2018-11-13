@@ -1,6 +1,7 @@
 import * as crypto from 'crypto';
 import Database from './Database';
 import app from './App'
+import Config from './Config';
 
 export default class Lecture {
     private id;
@@ -70,7 +71,7 @@ export default class Lecture {
             return;
         }
 
-        let path = `/${this.path}/${index}.svg`;
+        let path = `${Config.get('webroot')}${this.path}/${index}.svg`;
         let hash = crypto.createHmac('sha256', app.getSecretKey()).update(path).digest('hex');
 
         return `${path}?hash=${hash}`;

@@ -8,6 +8,7 @@ import Authenticator from './Authenticator';
 import * as ROLE from './ROLES';
 import Lecturer from './Lecturer';
 import Student from './Student';
+import Config from './Config';
 
 class App {
     public express;
@@ -121,7 +122,8 @@ class App {
         }
 
         if (req.query.hash) {
-            let hash = crypto.createHmac('sha256', this.getSecretKey()).update(req.path).digest('hex');
+            let webroot = Config.get('webroot').slice(0, -1);
+            let hash = crypto.createHmac('sha256', this.getSecretKey()).update(webroot + req.path).digest('hex');
 
             if (hash === req.query.hash) {
                 return next();
