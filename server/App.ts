@@ -46,7 +46,9 @@ class App {
         this.mountWebsocketListener();
 
         this.express.use(this.expressLectureProtectionMiddleware)
-        this.express.use(express.static('public'));
+        this.express.use(express.static('public', {
+            maxAge: 6 * 60 * 60 * 1000,
+        }));
     }
 
     public getNumberOfConnectedUsers() {
