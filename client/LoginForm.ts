@@ -93,8 +93,7 @@ export default class LoginForm extends Modal {
         } else {
             role = 'student';
             user = Utils.generateId(20);
-            let hash = await Utils.sha256(user + '|' + code);
-            token = code + '|' + hash;
+            token = await Utils.sha256(user + '|' + code);
         }
 
         return [role, user, token];
