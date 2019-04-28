@@ -8,7 +8,7 @@ export default class SpamProtection {
         return SpamProtection.instance;
     }
 
-    private trials = {};
+    private trials: { [ip: string]: { [operation: string]: number } } = {};
 
     private constructor() {
 

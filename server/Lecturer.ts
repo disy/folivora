@@ -1,8 +1,9 @@
 import Student from './Student';
 import app from './App';
+import { Socket, Server } from 'socket.io';
 
 export default class Lecturer extends Student {
-    constructor(id, socket, io) {
+    constructor(id: string, socket: Socket, io: Server) {
         super(id, socket, io);
 
         socket.join('lecturer');

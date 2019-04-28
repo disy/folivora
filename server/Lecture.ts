@@ -2,22 +2,39 @@ import * as crypto from 'crypto';
 import Database from './Database';
 import app from './App'
 import Config from './Config';
+import { LectureData } from './LectureRepository';
+
+interface IPage {
+    index: number
+    previousUrl: string
+    url: string
+    nextUrl: string
+    poll: IPoll
+    votes: { [choice: string]: number }
+    votedIds: string[]
+    progress: number,
+}
+
+interface IPoll {
+    question: string
+    choices: string[]
+}
 
 export default class Lecture {
-    private id;
-    private name;
-    private path;
-    private min;
-    private max;
+    private id: string;
+    private name: string;
+    private path: string;
+    private min: number;
+    private max: number;
 
-    private currentPageIndex;
-    private polls;
-    private votes;
-    private votedIds;
+    private currentPageIndex: number;
+    private polls: { [index: number]: IPoll };
+    private votes: { [index: number]: { [choice: string]: number } };
+    private votedIds: { [index: number]: string[] };
 
     private collection;
 
-    constructor(data) {
+    constructor(data: LectureData) {
         this.id = data.id;
         this.name = data.name;
         this.path = data.path;
@@ -47,7 +64,7 @@ export default class Lecture {
         }) || {};
     }
 
-    getCurrentPage() {
+    getCurrentPage(): IPage {
         let previousIndex = this.currentPageIndex > this.min ? this.currentPageIndex - 1 : undefined;
         let nextIndex = this.currentPageIndex < this.max ? this.currentPageIndex + 1 : undefined;
         let progress = (this.currentPageIndex - this.min) / (this.max - this.min);
@@ -66,7 +83,7 @@ export default class Lecture {
         return currentPage;
     }
 
-    getUrl(index) {
+    getUrl(index: number) {
         if (!index) {
             return;
         }
@@ -83,7 +100,7 @@ export default class Lecture {
         this.save();
     }
 
-    setPoll(index, question, choices) {
+    setPoll(index: number, question: string, choices: string[]) {
         if (!index) {
             return;
         }
@@ -103,7 +120,7 @@ export default class Lecture {
         this.save();
     }
 
-    vote(userId, slideIndex, choice) {
+    vote(userId: string, slideIndex: number, choice: string) {
         if (!this.votes[slideIndex]) {
             this.votes[slideIndex] = {};
         }

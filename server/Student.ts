@@ -1,17 +1,12 @@
 import LectureRepository from './LectureRepository';
 import SpamProtection from './SpamProtection';
+import { Socket, Server } from 'socket.io';
 
 export default class Student {
-    protected id;
-    protected socket;
-    protected io;
-    protected lectureRepository;
-    protected remoteAddress;
+    protected lectureRepository: LectureRepository;
+    protected remoteAddress: string;
 
-    constructor(id, socket, io) {
-        this.id = id;
-        this.socket = socket;
-        this.io = io;
+    constructor(protected id: string, protected socket: Socket, protected io: Server) {
         this.lectureRepository = LectureRepository.get();
         this.remoteAddress = socket.request.headers['x-forwarded-for'] || socket.request.connection.remoteAddress;
 

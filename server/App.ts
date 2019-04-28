@@ -11,9 +11,9 @@ import Student from './Student';
 import Config from './Config';
 
 class App {
-    public express;
-    public http;
-    public websocket;
+    public express: express.Express;
+    public http: Server;
+    public websocket: socketIO.Server;
 
     private connectedUsers = 0;
 
