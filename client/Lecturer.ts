@@ -11,7 +11,7 @@ const PAGE_DOWN = 34;
 const PAGE_UP = 33;
 const POINT = 190;
 
-interface Comment {
+interface IComment {
     index: number
     date: Date,
     comment: string
@@ -22,7 +22,7 @@ export default class Lecturer extends Student {
     private nextButton: JQuery;
     private pollResultButton: JQuery;
     private editPollButton: JQuery;
-    private comments: Comment[] = [];
+    private comments: IComment[] = [];
 
     constructor(id, socket) {
         super(id, socket);
@@ -162,7 +162,7 @@ export default class Lecturer extends Student {
         let layoutButton = $('<button>');
         layoutButton.text('Layout');
         layoutButton.click(() => {
-            let currentLayout = parseInt($('body').attr('data-layout'));
+            let currentLayout = parseInt($('body').attr('data-layout'), 10);
             let nextLayout = isNaN(currentLayout) ? 0 : (currentLayout + 1) % 3;
 
             $('body').attr('data-layout', nextLayout);

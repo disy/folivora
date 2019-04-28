@@ -14,6 +14,6 @@ if (lectureRepository.getNumberOfLectures() === 0) {
     process.exit(1);
 }
 
-app.http.listen(PORT, function () {
+app.http.listen(PORT, function() {
     console.log(`listening on *:${PORT}`);
 });

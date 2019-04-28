@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from './Modal';
 
 export default class LectureModal extends Modal {
     constructor(data, private selectLecture: (id) => void) {
@@ -15,7 +15,7 @@ export default class LectureModal extends Modal {
         this.show();
     }
 
-    addLectureToList(id, name, length) {
+    public addLectureToList(id, name, length) {
         let listElement = $('<li>');
         let linkElement = $('<a>');
         linkElement.attr('href', '#');

@@ -7,7 +7,14 @@
     "build": "webpack --mode=development",
     "start": "ts-node -P tsconfig.server.json ./server/index.ts",
     "dev-server": "nodemon ./server/index.ts",
-    "dev-client": "webpack --mode=development --watch"
+    "dev-client": "webpack --mode=development --watch",
+    "check-client-format": "tslint \"client/**/*.ts\"",
+    "check-server-format": "tslint \"server/**/*.ts\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn check-client-format && yarn check-server-format"
+    }
   },
   "dependencies": {
     "@types/express": "^4.16.0",
@@ -38,7 +45,9 @@
     "webpack": "^4.23.1"
   },
   "devDependencies": {
+    "husky": "^2.1.0",
     "nodemon": "^1.18.5",
+    "tslint": "^5.16.0",
     "webpack-cli": "^3.1.2"
   },
   "nodemonConfig": {

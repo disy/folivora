@@ -5,7 +5,7 @@ const rootDir = publicDir + 'lectures/';
 const slideFilenameRegex = /^([1-9]\d*)\.svg$/
 import Lecture from './Lecture';
 
-export interface LectureData {
+export interface ILectureData {
     path: string
     length: number
     min: number
@@ -17,19 +17,19 @@ export interface LectureData {
 export default class LectureRepository {
     private static instance = new LectureRepository();
 
-    static get() {
+    public static get() {
         return LectureRepository.instance;
     }
 
     private lectures: { [key: string]: Lecture } = {};
-    private lectureData: { [key: string]: LectureData } = {};
+    private lectureData: { [key: string]: ILectureData } = {};
     private lectureIds: string[] = [];
     private activeLectureId: string = undefined;
 
     constructor() {
     }
 
-    init() {
+    public init() {
         console.log('Read all lectures. Please wait...');
 
         this.lectureData = readAllLectures();
@@ -40,11 +40,11 @@ export default class LectureRepository {
         console.log(`I found ${this.lectureIds.length} lecture(s).`);
     }
 
-    exists(id: string) {
+    public exists(id: string) {
         return this.lectureIds.indexOf(id) > -1;
     }
 
-    getLecture(id: string) {
+    public getLecture(id: string) {
         id = id || this.lectureIds[0];
 
         if (!this.lectureData[id]) {
@@ -58,26 +58,26 @@ export default class LectureRepository {
         return this.lectures[id];
     }
 
-    setActiveLecture(id: string) {
+    public setActiveLecture(id: string) {
         this.activeLectureId = id;
     }
 
-    getActiveLecture() {
+    public getActiveLecture() {
         if (this.activeLectureId) {
             return this.getLecture(this.activeLectureId);
         }
     }
 
-    getLectureData() {
+    public getLectureData() {
         return this.lectureData;
     }
 
-    getNumberOfLectures() {
+    public getNumberOfLectures() {
         return this.lectureIds.length;
     }
 }
 
-function readAllLectures(): { [key: string]: LectureData } {
+function readAllLectures(): { [key: string]: ILectureData } {
     let items = fs.readdirSync(rootDir);
     let lectures = {};
 
@@ -94,7 +94,7 @@ function readAllLectures(): { [key: string]: LectureData } {
     return lectures;
 }
 
-function readLecture(id): LectureData {
+function readLecture(id): ILectureData {
     let dir = rootDir + '/' + id;
     let slides = fs.readdirSync(dir);
     let lecture = {
@@ -115,7 +115,7 @@ function readLecture(id): LectureData {
             continue;
         }
 
-        let slideIndex = parseInt(match[1]);
+        let slideIndex = parseInt(match[1], 10);
 
         if (lecture.min > slideIndex) {
             lecture.min = slideIndex;

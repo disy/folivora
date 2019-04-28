@@ -1,10 +1,10 @@
-import Modal from "./Modal";
+import Modal from './Modal';
 
 export default class CommentModal extends Modal {
-    constructor(comments: {index:number, comment:string, date:Date}[]) {
+    constructor(comments: Array<{index: number, comment: string, date: Date}>) {
         super($('#showCommentModal'));
 
-        (<any>this.element).modal({
+        (<any> this.element).modal({
             backdrop: 'static'
         });
 

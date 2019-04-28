@@ -1,7 +1,7 @@
-import Lecturer from "./Lecturer";
-import Student from "./Student";
-import LoginForm from "./LoginForm";
-import Connection from "./Connection";
+import Lecturer from './Lecturer';
+import Student from './Student';
+import LoginForm from './LoginForm';
+import Connection from './Connection';
 import Utils from './Utils'
 
 function initUI(socket) {

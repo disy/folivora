@@ -2,7 +2,7 @@ import * as crypto from 'crypto';
 import Database from './Database';
 import app from './App'
 import Config from './Config';
-import { LectureData } from './LectureRepository';
+import { ILectureData } from './LectureRepository';
 
 interface IPage {
     index: number
@@ -34,7 +34,7 @@ export default class Lecture {
 
     private collection;
 
-    constructor(data: LectureData) {
+    constructor(data: ILectureData) {
         this.id = data.id;
         this.name = data.name;
         this.path = data.path;
@@ -61,10 +61,10 @@ export default class Lecture {
             this.polls = data.polls || [];
             this.votes = data.votes || [];
             this.votedIds = data.votedIds || [];
-        }) || {};
+        });
     }
 
-    getCurrentPage(): IPage {
+    public getCurrentPage(): IPage {
         let previousIndex = this.currentPageIndex > this.min ? this.currentPageIndex - 1 : undefined;
         let nextIndex = this.currentPageIndex < this.max ? this.currentPageIndex + 1 : undefined;
         let progress = (this.currentPageIndex - this.min) / (this.max - this.min);
@@ -77,13 +77,13 @@ export default class Lecture {
             poll: this.polls[this.currentPageIndex],
             votes: this.votes[this.currentPageIndex],
             votedIds: this.votedIds[this.currentPageIndex] || [],
-            progress: progress,
+            progress,
         };
 
         return currentPage;
     }
 
-    getUrl(index: number) {
+    public getUrl(index: number) {
         if (!index) {
             return;
         }
@@ -94,13 +94,13 @@ export default class Lecture {
         return `${path}?hash=${hash}`;
     }
 
-    move(direction) {
-        this.currentPageIndex = Math.min(Math.max(this.currentPageIndex + parseInt(direction), this.min), this.max);
+    public move(direction) {
+        this.currentPageIndex = Math.min(Math.max(this.currentPageIndex + parseInt(direction, 10), this.min), this.max);
 
         this.save();
     }
 
-    setPoll(index: number, question: string, choices: string[]) {
+    public setPoll(index: number, question: string, choices: string[]) {
         if (!index) {
             return;
         }
@@ -116,11 +116,10 @@ export default class Lecture {
             delete this.votedIds[index];
         }
 
-
         this.save();
     }
 
-    vote(userId: string, slideIndex: number, choice: string) {
+    public vote(userId: string, slideIndex: number, choice: string) {
         if (!this.votes[slideIndex]) {
             this.votes[slideIndex] = {};
         }
@@ -152,7 +151,7 @@ export default class Lecture {
         return false;
     }
 
-    save() {
+    public save() {
         this.collection.update({
             id: this.id
         }, {

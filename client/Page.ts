@@ -3,7 +3,7 @@ export default class Page {
     private url: string;
 
     constructor(data) {
-        this.index = parseInt(data.index);
+        this.index = parseInt(data.index, 10);
         this.url = data.url;
 
         if (data.previousUrl) {
@@ -26,7 +26,7 @@ export default class Page {
 
         let image = new Image();
         image.onload = () => {
-            let currentIndex = parseInt($('body').attr('data-currentIndex'));
+            let currentIndex = parseInt($('body').attr('data-currentIndex'), 10);
 
             if (currentIndex === this.index) {
                 $('#current-slide').css('background-image', `url(${this.url})`);

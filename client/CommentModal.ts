@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from './Modal';
 
 export default class CommentModal extends Modal {
     constructor(sendComment) {

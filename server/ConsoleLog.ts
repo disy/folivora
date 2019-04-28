@@ -1,5 +1,5 @@
 function logFactory(logFunction, customPrefix = '') {
-    return function (argument, ...additionalArguments) {
+    return function(argument, ...additionalArguments) {
         const datePrefix = '[' + (new Date()).toISOString() + ']';
         const prefix = `${customPrefix}${datePrefix}`;
 

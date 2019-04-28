@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as expressHandlebars from 'express-handlebars';
 import { Server } from 'http';
 import * as socketIO from 'socket.io';
-const randomString = require("randomstring");
+const randomString = require('randomstring');
 import Authenticator from './Authenticator';
 import * as ROLE from './ROLES';
 import Lecturer from './Lecturer';
@@ -56,7 +56,7 @@ class App {
     }
 
     private mountRoutes() {
-        this.express.get('/', function (req, res) {
+        this.express.get('/', function(req, res) {
             res.sendFile(__dirname + '/index.html');
         });
     }

@@ -1,4 +1,4 @@
-import Modal from "./Modal";
+import Modal from './Modal';
 
 export default class VoteModal extends Modal {
     private voteBody: JQuery;
@@ -38,7 +38,7 @@ export default class VoteModal extends Modal {
         }
     }
 
-    addChoice(choice) {
+    public addChoice(choice) {
         let self = this;
         let itemElement = $('<li>');
         let choiceElement = $('<button>');
@@ -48,7 +48,7 @@ export default class VoteModal extends Modal {
         choiceElement.appendTo(itemElement);
         itemElement.appendTo(this.listElement);
 
-        choiceElement.click(function () {
+        choiceElement.click(function() {
             self.voteBody.find('button').prop('disabled', 'disabled');
 
             self.voteFor($(this).text());
