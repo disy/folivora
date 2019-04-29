@@ -3,6 +3,7 @@ import Page from './Page';
 import VoteModal from './VoteModal'
 import CommentModal from './CommentModal'
 import SystemMessage from './SystemMessage';
+import { IPageData } from '../model/Page.interface';
 
 export default class Student {
     private systemMessageTimeout;
@@ -23,7 +24,7 @@ export default class Student {
         this.socket.emit('ready');
     }
 
-    public onPage(page) {
+    public onPage(page: IPageData) {
         console.log('onPage', page)
 
         if (this.systemMessageTimeout) {
@@ -50,7 +51,7 @@ export default class Student {
 
         let hasVoted = page.votedIds.indexOf(this.id) > -1;
 
-        new VoteModal(hasVoted, page.poll, (choice) => {
+        new VoteModal(hasVoted, page.poll, (choice: string) => {
             this.socket.emit('vote', {
                 slideIndex: page.index,
                 choice,

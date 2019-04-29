@@ -4,6 +4,7 @@ import EditPollModal from './EditPollModal';
 import LectureModal from './LectureModal';
 import ShowCommentModal from './ShowCommentModal';
 import InfoModal from './InfoModal'
+import { IPageData } from '../model/Page.interface';
 
 const ARROW_LEFT = 37;
 const ARROW_RIGHT = 39;
@@ -46,7 +47,7 @@ export default class Lecturer extends Student {
             }
         });
 
-        socket.on('page', (page) => {
+        socket.on('page', (page: IPageData) => {
             this.editPollButton.off('click').click(() => {
                 new EditPollModal(page.index, page.poll, (data) => {
                     socket.emit('poll', data);

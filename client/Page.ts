@@ -1,9 +1,11 @@
+import { IPageData } from '../model/Page.interface';
+
 export default class Page {
     private index: number;
     private url: string;
 
-    constructor(data) {
-        this.index = parseInt(data.index, 10);
+    constructor(data: IPageData) {
+        this.index = typeof data.index === 'number' ? data.index : parseInt(data.index, 10);
         this.url = data.url;
 
         if (data.previousUrl) {

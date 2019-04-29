@@ -4,15 +4,7 @@ const publicDir = __dirname + '/../public/';
 const rootDir = publicDir + 'lectures/';
 const slideFilenameRegex = /^([1-9]\d*)\.svg$/
 import Lecture from './Lecture';
-
-export interface ILectureData {
-    path: string
-    length: number
-    min: number
-    max: number
-    name: string
-    id: string
-}
+import { ILectureData } from '../model/Lecture.interface';
 
 export default class LectureRepository {
     private static instance = new LectureRepository();

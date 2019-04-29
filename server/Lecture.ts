@@ -2,23 +2,9 @@ import * as crypto from 'crypto';
 import Database from './Database';
 import app from './App'
 import Config from './Config';
-import { ILectureData } from './LectureRepository';
-
-interface IPage {
-    index: number
-    previousUrl: string
-    url: string
-    nextUrl: string
-    poll: IPoll
-    votes: { [choice: string]: number }
-    votedIds: string[]
-    progress: number,
-}
-
-interface IPoll {
-    question: string
-    choices: string[]
-}
+import { ILectureData } from '../model/Lecture.interface';
+import { IPollData } from '../model/Poll.interface';
+import { IPageData } from '../model/Page.interface';
 
 export default class Lecture {
     private id: string;
@@ -28,7 +14,7 @@ export default class Lecture {
     private max: number;
 
     private currentPageIndex: number;
-    private polls: { [index: number]: IPoll };
+    private polls: { [index: number]: IPollData };
     private votes: { [index: number]: { [choice: string]: number } };
     private votedIds: { [index: number]: string[] };
 
@@ -64,7 +50,7 @@ export default class Lecture {
         });
     }
 
-    public getCurrentPage(): IPage {
+    public getCurrentPage(): IPageData {
         let previousIndex = this.currentPageIndex > this.min ? this.currentPageIndex - 1 : undefined;
         let nextIndex = this.currentPageIndex < this.max ? this.currentPageIndex + 1 : undefined;
         let progress = (this.currentPageIndex - this.min) / (this.max - this.min);

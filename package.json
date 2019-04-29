@@ -9,11 +9,15 @@
     "dev-server": "nodemon ./server/index.ts",
     "dev-client": "webpack --mode=development --watch",
     "check-client-format": "tslint \"client/**/*.ts\"",
-    "check-server-format": "tslint \"server/**/*.ts\""
+    "check-server-format": "tslint \"server/**/*.ts\"",
+    "check-model-format": "tslint \"model/**/*.ts\"",
+    "fix-client-format": "tslint \"client/**/*.ts\" --fix",
+    "fix-server-format": "tslint \"server/**/*.ts\" --fix",
+    "fix-model-format": "tslint \"model/**/*.ts\" --fix"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn check-client-format && yarn check-server-format"
+      "pre-commit": "yarn check-client-format && yarn check-server-format && yarn check-model-format"
     }
   },
   "dependencies": {

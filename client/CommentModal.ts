@@ -1,7 +1,7 @@
 import Modal from './Modal';
 
 export default class CommentModal extends Modal {
-    constructor(sendComment) {
+    constructor(sendComment: (comment: string) => void) {
         super($('#commentModal'));
         this.hide();
 
@@ -17,7 +17,7 @@ export default class CommentModal extends Modal {
         let submitElement = $('<button type="button" class="btn btn-primary">');
         submitElement.text('Send comment');
         submitElement.click(() => {
-            let comment = commentElement.val();
+            let comment = <string> commentElement.val();
 
             if (comment) {
                 sendComment(comment);
