@@ -46,7 +46,7 @@ Gets triggered each time a user votes.
 
 ```
 {
-    slideIndex: number,
+    index: number,
     choice: string
 }
 ```
