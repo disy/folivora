@@ -94,7 +94,7 @@ function readLecture(id): ILectureData {
         length: 0,
         min: 99999,
         max: 0,
-        name: id.replace('-', ' '),
+        name: id.replace(/-/g, ' '),
         id
     };
 
