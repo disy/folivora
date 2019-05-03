@@ -105,29 +105,29 @@ export default class Lecture {
         this.save();
     }
 
-    public vote(userId: string, slideIndex: number, choice: string) {
-        if (!this.votes[slideIndex]) {
-            this.votes[slideIndex] = {};
+    public vote(userId: string, index: number, choice: string) {
+        if (!this.votes[index]) {
+            this.votes[index] = {};
         }
 
-        let poll = this.polls[slideIndex];
+        let poll = this.polls[index];
         if (!poll || poll.choices.indexOf(choice) < 0) {
             return false;
         }
 
-        if (!this.votes[slideIndex][choice]) {
-            this.votes[slideIndex][choice] = 0;
+        if (!this.votes[index][choice]) {
+            this.votes[index][choice] = 0;
         }
 
-        if (!this.votedIds[slideIndex]) {
-            this.votedIds[slideIndex] = [];
+        if (!this.votedIds[index]) {
+            this.votedIds[index] = [];
         }
 
-        if (this.votedIds[slideIndex].indexOf(userId) < 0) {
-            this.votedIds[slideIndex].push(userId);
-            this.votes[slideIndex][choice]++;
+        if (this.votedIds[index].indexOf(userId) < 0) {
+            this.votedIds[index].push(userId);
+            this.votes[index][choice]++;
 
-            console.log(`"${userId}" voted on slide ${slideIndex} for "${choice}"`);
+            console.log(`"${userId}" voted on slide ${index} for "${choice}"`);
 
             this.save();
 

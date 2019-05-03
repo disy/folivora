@@ -19,7 +19,7 @@ export default class Student {
         });
 
         socket.on('vote', ({
-            slideIndex,
+            index,
             choice
         }) => {
             let lecture = this.lectureRepository.getActiveLecture();
@@ -28,11 +28,11 @@ export default class Student {
                 return;
             }
 
-            let success = lecture.vote(this.id, slideIndex, choice);
+            let success = lecture.vote(this.id, index, choice);
 
             if (success) {
                 io.to('lecturer').emit('vote', {
-                    slideIndex,
+                    index,
                     choice
                 });
             }

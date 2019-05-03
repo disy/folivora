@@ -107,14 +107,14 @@ function readLecture(id): ILectureData {
             continue;
         }
 
-        let slideIndex = parseInt(match[1], 10);
+        let index = parseInt(match[1], 10);
 
-        if (lecture.min > slideIndex) {
-            lecture.min = slideIndex;
+        if (lecture.min > index) {
+            lecture.min = index;
         }
 
-        if (lecture.max < slideIndex) {
-            lecture.max = slideIndex
+        if (lecture.max < index) {
+            lecture.max = index
         }
 
         lecture.length++;

@@ -35,10 +35,10 @@ export default class Lecturer extends Student {
         });
 
         socket.on('vote', ({
-            slideIndex,
+            index,
             choice
         }) => {
-            let pollResult = PollResultManager.get(slideIndex);
+            let pollResult = PollResultManager.get(index);
 
             if (pollResult) {
                 pollResult.addVote(choice);

@@ -53,7 +53,7 @@ export default class Student {
 
         new VoteModal(hasVoted, page.poll, (choice: string) => {
             this.socket.emit('vote', {
-                slideIndex: page.index,
+                index: page.index,
                 choice,
             });
         });
