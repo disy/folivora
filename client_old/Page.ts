@@ -1,11 +1,9 @@
-import { IPageData } from '../model/Page.interface';
-
 export default class Page {
     private index: number;
     private url: string;
 
-    constructor(data: IPageData) {
-        this.index = typeof data.index === 'number' ? data.index : parseInt(data.index, 10);
+    constructor(data) {
+        this.index = parseInt(data.index);
         this.url = data.url;
 
         if (data.previousUrl) {
@@ -28,7 +26,7 @@ export default class Page {
 
         let image = new Image();
         image.onload = () => {
-            let currentIndex = parseInt($('body').attr('data-currentIndex'), 10);
+            let currentIndex = parseInt($('body').attr('data-currentIndex'));
 
             if (currentIndex === this.index) {
                 $('#current-slide').css('background-image', `url(${this.url})`);

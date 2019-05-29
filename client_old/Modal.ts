@@ -3,11 +3,11 @@ export default class Modal {
 
     }
 
-    public show() {
+    show() {
         (<any> this.element).modal('show');
     }
 
-    public hide() {
+    hide() {
         (<any> this.element).modal('hide');
     }
 }

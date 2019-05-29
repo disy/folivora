@@ -1,9 +1,8 @@
-import { Socket } from 'socket.io';
-import Page from './Page';
+import { Socket } from "socket.io";
+import Page from "./Page";
 import VoteModal from './VoteModal'
 import CommentModal from './CommentModal'
-import SystemMessage from './SystemMessage';
-import { IPageData } from '../model/Page.interface';
+import SystemMessage from "./SystemMessage";
 
 export default class Student {
     private systemMessageTimeout;
@@ -24,12 +23,10 @@ export default class Student {
         this.socket.emit('ready');
     }
 
-    public onPage(page: IPageData) {
+    onPage(page) {
         console.log('onPage', page)
 
-        if (this.systemMessageTimeout) {
-            clearTimeout(this.systemMessageTimeout);
-        }
+        this.systemMessageTimeout && clearTimeout(this.systemMessageTimeout);
         SystemMessage.hide();
 
         this.commentButton.off('click').on('click', () => {
@@ -51,10 +48,10 @@ export default class Student {
 
         let hasVoted = page.votedIds.indexOf(this.id) > -1;
 
-        new VoteModal(hasVoted, page.poll, (choice: string) => {
+        new VoteModal(hasVoted, page.poll, (choice) => {
             this.socket.emit('vote', {
-                index: page.index,
-                choice,
+                slideIndex: page.index,
+                choice: choice,
             });
         });
     }

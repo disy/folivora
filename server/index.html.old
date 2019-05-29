@@ -1,0 +1,235 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/bundle.css" />
+
+    <title>Folivora - Interactive slide presenter</title>
+</head>
+
+<body data-layout="0">
+    <div id="pollNotice"></div>
+
+    <div id="slide-section">
+        <div id="previous-slide" class="slide preloading"></div>
+
+        <div id="current-slide" class="slide"></div>
+
+        <div id="next-slide" class="slide preloading"></div>
+    </div>
+
+    <div id="progress"></div>
+
+    <div id="systemMessage" style="display: none"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoTitle">Info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="showCommentModal" tabindex="-1" role="dialog" aria-labelledby="showCommentModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showCommentModalTitle">Comments</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalTitle">Comment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="lectureModal" tabindex="-1" role="dialog" aria-labelledby="lectureModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lectureModalTitle">Select lecture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="pollResultModal" tabindex="-1" role="dialog" aria-labelledby="pollResultModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pollResultModalTitle">Poll result</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="voteModal" tabindex="-1" role="dialog" aria-labelledby="voteModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="voteTitle">Vote</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="pollModal" tabindex="-1" role="dialog" aria-labelledby="pollModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pollModalTitle">Edit poll</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="questionInput" placeholder="Question" class="form-control">
+                    <ol type="A" id="choicesList"></ol>
+                    <button id="addOption" class="btn btn-secondary">Add option</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="deletePoll">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form class="modal-content" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalTitle">Login</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="role" id="radioRoleStudent" value="student"
+                            checked>
+                        <label class="form-check-label" for="radioRoleStudent">
+                            Student
+                        </label>
+                    </div>
+
+                    <div class="form-check" style="margin-bottom: 2rem;">
+                        <input class="form-check-input" type="radio" name="role" id="radioRoleLecturer" value="lecturer">
+                        <label class="form-check-label" for="radioRoleLecturer">
+                            Lecturer
+                        </label>
+                    </div>
+
+                    <div class="form-group code">
+                        <label for="codeInput">Code</label>
+                        <input type="text" name="code" class="form-control" id="codeInput" placeholder="Enter code">
+                    </div>
+
+                    <div class="form-group credentials" style="display: none;">
+                        <label for="exampleInputEmail1">Username</label>
+                        <input type="text" name="username" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp" placeholder="Enter username">
+                    </div>
+                    <div class="form-group credentials" style="display: none;">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" name="password" class="form-control" id="exampleInputPassword1"
+                            placeholder="Password">
+                    </div>
+
+                    <p class="bg-warning" style="padding: 10px; margin-top:15px; display: none;"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="vendor/jquery-3.3.1.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="socket.io/socket.io.js"></script>
+    <script src="scripts/bundle.js"></script>
+</body>
+
+</html>

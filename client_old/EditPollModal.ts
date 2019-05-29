@@ -1,4 +1,4 @@
-import Modal from './Modal';
+import Modal from "./Modal";
 
 type SavePoll = (data: { index: number, question?: string, choices?: string[] }) => void;
 
@@ -29,11 +29,11 @@ export default class EditPollModal extends Modal {
         this.show();
     }
 
-    public addChoice(choice) {
+    addChoice(choice) {
         $('#choicesList').append(`<li><input class="form-control" value="${choice}" type="text"/></li>`);
     }
 
-    public onDelete() {
+    onDelete() {
         this.savePoll({
             index: this.pageIndex
         });
@@ -41,9 +41,9 @@ export default class EditPollModal extends Modal {
         this.hide();
     }
 
-    public onSave() {
+    onSave() {
         let question = <string> $('#questionInput').val();
-        let choices = $('#choicesList').find('input').map((index, element) => <string> $(element).val()).get().filter(c => !!c);
+        let choices = $('#choicesList').find('input').map((index, element) => <string>$(element).val()).get().filter(c => !!c);
 
         if (!this.pageIndex || !question || choices.length === 0) {
             return;
@@ -51,8 +51,8 @@ export default class EditPollModal extends Modal {
 
         this.savePoll({
             index: this.pageIndex,
-            question,
-            choices,
+            question: question,
+            choices: choices,
         });
 
         this.hide();

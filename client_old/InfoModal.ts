@@ -1,4 +1,4 @@
-import Modal from './Modal';
+import Modal from "./Modal";
 import * as QRCode from 'qrcode'
 
 export default class InfoModal extends Modal {

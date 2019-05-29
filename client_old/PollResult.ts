@@ -12,7 +12,7 @@ export default class PollResult {
         }
     }
 
-    public show() {
+    show() {
         let body = this.element.find('.modal-body');
         body.empty();
 
@@ -46,7 +46,7 @@ export default class PollResult {
         this.element.modal('show');
     }
 
-    public addVote(choice) {
+    addVote(choice) {
         let votes = this.votes[choice] || 0;
 
         this.votes[choice] = votes + 1;
@@ -64,11 +64,11 @@ export default class PollResult {
         this.updateTotalVotes();
     }
 
-    public getNumberOfVotes() {
+    getNumberOfVotes() {
         return this.totalVotes;
     }
 
-    public updateTotalVotes() {
+    updateTotalVotes() {
         this.element.find('.poll-result__total').text(`${this.totalVotes} people have voted.`);
     }
 }

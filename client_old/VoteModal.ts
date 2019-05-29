@@ -1,12 +1,11 @@
-import Modal from './Modal';
-import { IPollData } from '../model/Poll.interface';
+import Modal from "./Modal";
 
 export default class VoteModal extends Modal {
     private voteBody: JQuery;
     private questionElement: JQuery;
     private listElement: JQuery;
 
-    constructor(hasVoted: boolean, data: IPollData, private voteFor: (choice: string) => void) {
+    constructor(hasVoted, data, private voteFor) {
         super($('#voteModal'));
         this.hide();
 
@@ -39,7 +38,7 @@ export default class VoteModal extends Modal {
         }
     }
 
-    public addChoice(choice: string) {
+    addChoice(choice) {
         let self = this;
         let itemElement = $('<li>');
         let choiceElement = $('<button>');
@@ -49,7 +48,7 @@ export default class VoteModal extends Modal {
         choiceElement.appendTo(itemElement);
         itemElement.appendTo(this.listElement);
 
-        choiceElement.click(function() {
+        choiceElement.click(function () {
             self.voteBody.find('button').prop('disabled', 'disabled');
 
             self.voteFor($(this).text());

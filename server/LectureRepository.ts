@@ -94,7 +94,7 @@ function readLecture(id): ILectureData {
         length: 0,
         min: 99999,
         max: 0,
-        name: id.replace(/-/g, ' '),
+        name: id.replace('-', ' '),
         id
     };
 
@@ -107,14 +107,14 @@ function readLecture(id): ILectureData {
             continue;
         }
 
-        let index = parseInt(match[1], 10);
+        let slideIndex = parseInt(match[1], 10);
 
-        if (lecture.min > index) {
-            lecture.min = index;
+        if (lecture.min > slideIndex) {
+            lecture.min = slideIndex;
         }
 
-        if (lecture.max < index) {
-            lecture.max = index
+        if (lecture.max < slideIndex) {
+            lecture.max = slideIndex
         }
 
         lecture.length++;

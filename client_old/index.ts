@@ -1,7 +1,7 @@
-import Lecturer from './Lecturer';
-import Student from './Student';
-import LoginForm from './LoginForm';
-import Connection from './Connection';
+import Lecturer from "./Lecturer";
+import Student from "./Student";
+import LoginForm from "./LoginForm";
+import Connection from "./Connection";
 import Utils from './Utils'
 
 function initUI(socket) {
@@ -29,6 +29,7 @@ function logout(socket?) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
+    localStorage.removeItem('Stamp');
 
     $('#pollBar').remove();
     $('#navBar').remove();
@@ -43,7 +44,20 @@ function logout(socket?) {
 
 async function init() {
     let code = window.location.hash.replace(/^#/, '');
-    let role = localStorage.getItem('role');
+    var Stamp = JSON.parse(localStorage.getItem("Stamp"));
+    let role;
+
+    if(Stamp){
+        let timestamp = Stamp.timestamp;
+        let interval = 28800000;
+        if(Date.now()-timestamp<interval && Date.now()>timestamp){
+            role=Stamp.role;
+        } else {
+            localStorage.removeItem('Stamp');
+        }
+    }
+
+    //let role = localStorage.getItem('role');
     let connectionPromise;
 
     if (!role && !code) {

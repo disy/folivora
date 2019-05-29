@@ -2,7 +2,7 @@ import * as io from 'socket.io-client'
 import SystemMessage, { Level } from './SystemMessage';
 
 export default class Connection {
-    private static instance: Connection;
+    private static instance;
 
     public static get(): Connection {
         if (!Connection.instance) {
@@ -16,7 +16,7 @@ export default class Connection {
 
     }
 
-    public connect(role, user?: string, token?: string): Promise<[SocketIOClient.Socket, string, string]> {
+    public connect(role, user, token): Promise<[SocketIOClient.Socket, string, string]> {
         const socket = io(`?role=${role}&user=${user || ''}&token=${token || ''}`, {
             path: window.location.pathname + 'socket.io/'
         });

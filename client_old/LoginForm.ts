@@ -1,7 +1,7 @@
-import Modal from './Modal';
-import Utils from './Utils';
-import { Socket } from 'dgram';
-import Connection from './Connection';
+import Modal from "./Modal";
+import Utils from "./Utils";
+import { Socket } from "dgram";
+import Connection from "./Connection";
 
 export default class LoginForm extends Modal {
     private formElement: JQuery;
@@ -11,7 +11,7 @@ export default class LoginForm extends Modal {
         super($('#loginModal'));
         this.formElement = this.element.find('form');
 
-        (<any> this.element).modal({
+        (<any>this.element).modal({
             backdrop: 'static',
             keyboard: false,
         });
@@ -27,7 +27,7 @@ export default class LoginForm extends Modal {
     }
 
     private registerHandler() {
-        this.element.find('[name="code"]').keyup(function() {
+        this.element.find('[name="code"]').keyup(function () {
             $(this).val($(this).val().toString().toUpperCase());
         });
 
@@ -35,7 +35,7 @@ export default class LoginForm extends Modal {
             $('#loginModal .bg-warning').hide().text('');
         });
 
-        this.element.find('input[type="radio"]').change(function() {
+        this.element.find('input[type="radio"]').change(function () {
             if ($(this).val() === 'lecturer') {
                 $('.credentials').show();
                 $('.code').hide();
@@ -53,10 +53,7 @@ export default class LoginForm extends Modal {
 
         this.formElement.prop('disabled', true);
 
-        let role;
-        let user;
-        let token;
-        let socket;
+        let role, user, token, socket;
         try {
             [role, user, token] = await this.processForm();
             [socket, role, user] = await Connection.get().connect(role, user, token);
@@ -71,9 +68,17 @@ export default class LoginForm extends Modal {
 
         this.hide();
 
-        localStorage.setItem('role', role);
+       /* localStorage.setItem('role', role);
         localStorage.setItem('user', user);
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', token);*/
+        var object = {
+            timestamp: Date.now(),
+            role: role,
+            user: user,
+            token: token
+        };
+        localStorage.setItem("Stamp", JSON.stringify(object));
+
 
         this.resolve([socket, role, user]);
 
@@ -89,7 +94,7 @@ export default class LoginForm extends Modal {
 
         if (role === 'lecturer') {
             if (!user || !password) {
-                throw new Error('Username and password required.');
+                throw 'Username and password required.';
             }
 
             token = await Utils.sha256(user + '|' + password);
